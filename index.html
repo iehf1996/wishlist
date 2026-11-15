@@ -1,21 +1,64 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Мои хотелки — вишлист">
-  <title>Мои хотелки</title>
-  <style>
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; background: #b84b45; }
-    body { display: flex; justify-content: center; }
-    main { width: 100%; max-width: 2048px; }
-    img { display: block; width: 100%; height: auto; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#b84d45">
+<title>Мои хотелки</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: #eee7dc; }
+  body { padding: 18px 12px; }
+  .wishlist {
+    position: relative;
+    width: min(100%, 1100px);
+    margin: 0 auto;
+    aspect-ratio: 3500 / 3063;
+    overflow: hidden;
+  }
+  .layer {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+    user-select: none;
+  }
+  .click-map { position:absolute; inset:0; width:100%; height:100%; z-index:5; }
+  .hit { fill: transparent; pointer-events: all; cursor: pointer; }
+  .hit:focus { stroke: #a93f38; stroke-width: 8; }\n  .hotspot {
+    position: absolute;
+    display: block;
+    z-index: 5;
+    cursor: pointer;
+    border-radius: 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hotspot:focus-visible {
+    outline: 2px dashed #a93f38;
+    outline-offset: 2px;
+    background: rgba(255,255,255,.08);
+  }
+  @media (max-width: 600px) {
+    body { padding: 6px 0; }
+    .wishlist { width: 100%; }
+  }
+</style>
 </head>
 <body>
-  <main>
-    <img src="assets/design.jpg" alt="Мои хотелки — вишлист">
-  </main>
+<main class="wishlist" aria-label="Вишлист">
+<img class="layer" src="assets/0_фон.png" alt="">
+<img class="layer" src="assets/1_изразец.png" alt="">
+<img class="layer" src="assets/2_вокруг да около.png" alt="">
+<img class="layer" src="assets/3_румбокс.png" alt="">
+<img class="layer" src="assets/4_карты таро.png" alt="">
+<img class="layer" src="assets/5_спасибо что спросил.png" alt="">
+<img class="layer" src="assets/6_страдающее средневековье.png" alt="">
+<img class="layer" src="assets/7_насыпные свечи.png" alt="">
+<img class="layer" src="assets/8_пазлы.png" alt="">
+<img class="layer" src="assets/9_скалка.png" alt="">
+<img class="layer" src="assets/10_штампы.png" alt="">
+<img class="layer" src="assets/11_ковровая вышивка.png" alt="">
+<img class="layer" src="assets/текст.png" alt="Текст вишлиста">
+<svg class="click-map" viewBox="0 0 3500 3063" preserveAspectRatio="none" aria-label="Ссылки на товары"><a href="https://www.ozon.ru/product/izrazets-gamayun-tsvet-belyy-s-zolotom-10-10-sm-1842260933/?at=1mWr1V4TpPiw08mPM3n-I7hsHzCKLMH0&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Изразец керамический"><path class="hit" d="M748,498 L672,480 L579,440 L411,400 L398,415 L332,635 L189,636 L169,649 L162,663 L162,682 L169,696 L181,706 L189,709 L308,709 L303,731 L318,757 L377,775 L339,796 L340,801 L344,803 L359,796 L361,798 L328,829 L304,872 L299,894 L299,930 L304,950 L316,969 L319,967 L310,954 L306,939 L305,902 L306,890 L317,859 L338,829 L388,786 L390,787 L383,802 L385,815 L392,809 L403,784 L407,783 L621,854 L642,851 L653,843 L700,674 L754,522 L755,509 Z"/></a><a href="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Вокруг да около»"><path class="hit" d="M508,702 L510,722 L562,963 L574,965 L742,918 L751,911 L744,882 L747,875 L789,874 L791,881 L768,981 L775,988 L775,992 L792,996 L763,1009 L752,1020 L749,1034 L755,1046 L765,1053 L794,1059 L858,1055 L924,1060 L943,1066 L959,1081 L958,1093 L950,1101 L923,1113 L869,1123 L823,1125 L836,1128 L874,1127 L929,1119 L956,1108 L966,1098 L970,1089 L967,1072 L950,1057 L940,1053 L938,1056 L937,1052 L915,1047 L790,1047 L767,1040 L761,1035 L761,1029 L767,1021 L778,1014 L818,999 L821,1000 L816,1009 L818,1020 L826,1013 L831,1003 L835,1002 L952,1031 L961,1031 L966,1025 L1004,762 L995,754 L921,735 L916,729 L916,707 L1161,706 L1174,700 L1184,689 L1188,680 L1188,659 L1174,639 L1161,633 L918,633 L918,587 L913,576 L744,563 L741,606 L737,613 L647,618 L648,663 L645,667 Z"/></a><a href="https://www.ozon.ru/product/rumboks-s-russkoy-instruktsiey-kupolom-kraskoy-kistochkoy-podsvetkoy-magazin-volshebnyh-1183770862/?at=1pSo1RrfpvdhbQcg3vUxXTqr24czI2zH&is_apparel_size_selected=true&sh=USWH6q6xvA&oos_search=false&hideable_rating=true" target="_blank" rel="noopener noreferrer" aria-label="Румбокс «Магазин волшебных палочек»"><path class="hit" d="M162,1578 L162,1597 L165,1605 L175,1617 L189,1624 L352,1624 L370,1628 L599,1638 L847,1658 L1168,1639 L1173,1635 L1174,1628 L1141,1416 L1141,1259 L1155,1207 L1155,1198 L1126,1165 L1034,1155 L872,1169 L415,1148 L387,1183 L353,1246 L378,1379 L384,1387 L410,1404 L398,1530 L372,1551 L189,1551 L175,1558 Z"/></a><a href="https://www.ozon.ru/product/komplekt-taro-triumfy-luny-komplekt-koloda-s-knigoy-5172182244/?at=1gep1Zs5aJQN6BmniqopUTqxb4bUbSse&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Карты таро «Триумфы луны»"><path class="hit" d="M984,1839 L976,1837 L949,1851 L929,1858 L920,1858 L917,1863 L922,1869 L948,1864 L935,1875 L901,1893 L862,1903 L826,1900 L824,1904 L831,1910 L843,1913 L883,1909 L921,1895 L945,1881 L959,1868 L961,1872 L957,1880 L957,1901 L960,1903 L969,1886 Z M1420,1708 L1379,1602 L1251,1394 L1236,1377 L1042,1473 L1005,1468 L834,1623 L830,1647 L875,1702 L715,1702 L702,1708 L691,1721 L688,1728 L688,1749 L702,1769 L715,1775 L943,1775 L1087,1935 L1098,1941 L1118,1944 L1269,1808 L1405,1734 L1417,1722 Z"/></a><a href="https://www.ozon.ru/product/spasibo-chto-sprosil-3-nastolnaya-igra-na-sblizhenie-1125202100/?at=1pWo1XDj91aGXBzMjNRJ-luJUpsUi1r9&from_sku=1125201233&oos_search=false&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Спасибо, что спросил»"><path class="hit" d="M1600,916 L1415,636 L1407,633 L1120,787 L1115,792 L1067,815 L1068,823 L1111,904 L1170,1006 L1045,1007 L1031,1014 L1021,1026 L1018,1034 L1018,1053 L1025,1067 L1045,1080 L1212,1080 L1246,1137 L1272,1138 L1353,1095 L1521,990 L1561,962 L1595,927 Z"/></a><a href="https://www.ozon.ru/product/nastolnaya-igra-stradayushchee-srednevekove-177595533/?at=1mWr1-jyECx7bebo6hraIOh3fcLm1JNv&sh=USWH6oDzEQ" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Страдающее средневековье»"><path class="hit" d="M2240,1320 L2234,1309 L2155,1299 L2151,1294 L2142,1256 L2133,1245 L1978,1195 L1767,1252 L1758,1257 L1741,1285 L1741,1291 L1799,1483 L1557,1484 L1544,1490 L1533,1503 L1530,1510 L1530,1531 L1544,1551 L1557,1557 L1821,1557 L1838,1610 L1858,1628 L1874,1631 L1928,1627 L1934,1629 L1944,1640 L1940,1645 L1914,1655 L1876,1660 L1856,1659 L1861,1664 L1909,1664 L1933,1657 L1950,1648 L1963,1663 L1971,1667 L2149,1689 L2219,1668 L2225,1659 L2243,1353 Z"/></a><a href="https://www.ozon.ru/product/nasypnye-svechi-1-kg-v-granulah-fitil-2-m-nasypnoy-vosk-dlya-svechey-nabor-dlya-sozdaniya-180746987/?at=1pSo1XYXX3EWlSGn9jHobLKUPpZq8gG7&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Насыпные свечи"><path class="hit" d="M2702,1368 L2646,1364 L2295,1368 L2277,1589 L2284,1726 L2124,1728 L2113,1734 L2101,1750 L2100,1773 L2107,1787 L2127,1800 L2287,1800 L2290,1869 L2300,1875 L2455,1883 L2693,1872 L2703,1869 L2706,1862 L2708,1549 L2706,1379 Z"/></a><a href="https://www.ozon.ru/product/pazl-bosh-sad-zemnyh-naslazhdeniy-1000-detaley-stradayushchee-srednevekove-1352280891/?at=1sSo1V0-FdPxaAWgTSiaga65IBOwBpKU&from_sku=1352280891&oos_search=false&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Пазлы"><path class="hit" d="M2138,634 L2108,634 L2098,638 L2098,641 L2093,641 L2085,650 L2085,669 L2098,686 L2113,715 L2113,729 L2109,738 L1386,738 L1385,1231 L1363,1270 L1353,1251 L1340,1240 L1332,1239 L1326,1244 L1325,1256 L1336,1294 L1367,1353 L1374,1361 L1383,1363 L1381,1353 L1385,1351 L1385,1437 L1389,1443 L2112,1444 L2118,1440 L2119,952 L2222,951 L2235,945 L2249,925 L2247,899 L2243,892 L2228,880 L2119,877 L2119,743 L2124,720 L2115,694 L2095,665 L2094,655 L2106,644 L2133,642 L2139,639 Z"/></a><a href="https://www.ozon.ru/product/3d-kulinar-skalka-s-uzorom-729608316/?at=1sSo1_-Nb9DSfVW3TOCaJ4Tn6I0jbcYS&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Фигурная скалка с желудями"><path class="hit" d="M2463,471 L2465,479 L2495,509 L2587,555 L2672,628 L2911,749 L3017,772 L3066,811 L3130,835 L3138,831 L3152,811 L3160,789 L3152,753 L3135,737 L3290,737 L3303,731 L3316,714 L3317,691 L3313,681 L3303,670 L3290,664 L3043,664 L3035,667 L3024,657 L2985,635 L2997,591 L2997,576 L2988,541 L2932,561 L2928,566 L2929,602 L2923,605 L2734,506 L2687,488 L2666,507 L2634,487 L2513,425 L2482,432 Z"/></a><a href="https://www.ozon.ru/product/derevyannye-shtampy-russkiy-i-latinskiy-alfavit-bukvy-i-tsifry-derevyannyy-keys-3591251164/?at=1pSo1T31MvfMHg8tvqRkmudz7v63EUOX&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Штампы алфавитные"><path class="hit" d="M2758,830 L2715,819 L2686,818 L2660,821 L2613,838 L2571,868 L2571,861 L2579,845 L2578,840 L2572,838 L2558,862 L2547,893 L2288,957 L2259,996 L2259,1007 L2168,1007 L2154,1014 L2145,1024 L2141,1034 L2142,1057 L2148,1067 L2160,1077 L2168,1080 L2282,1081 L2320,1213 L2319,1244 L2421,1465 L2431,1479 L2448,1484 L2461,1483 L2773,1347 L2785,1339 L2791,1311 L2789,1296 L2675,1101 L2689,942 L2688,927 L2669,896 L2634,859 L2613,868 L2598,869 L2571,878 L2614,844 L2617,845 L2618,842 L2645,832 L2671,828 L2677,824 L2705,825 L2743,832 L2768,842 L2770,838 Z"/></a><a href="https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-gusi-1801598852/?at=1mWr1RIVU4WxPn_zrrCqrqBL4_z8YppB&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Набор для ковровой вышивки «Гуси»"><path class="hit" d="M2590,1044 L2590,1708 L3090,1708 L3091,1653 L3289,1653 L3302,1647 L3310,1639 L3316,1627 L3316,1606 L3302,1586 L3289,1580 L3090,1579 L3090,1044 Z"/></a></svg></main>
 </body>
 </html>
