@@ -48,6 +48,21 @@
     cursor: pointer;
   }
 
+  /* Слой высветления всей страницы */
+  .highlight-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 13;
+    background: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .highlight-overlay.active {
+    opacity: 1;
+  }
+
   .accessible-links {
     position: absolute;
     width: 1px;
@@ -59,11 +74,6 @@
     white-space: nowrap;
     border: 0;
   }
-
- :root {
-  --outline-thickness: 10px;
-  --outline-color: #bb403b;
-}
 </style>
 </head>
 
@@ -165,10 +175,13 @@
        style="z-index:11"
        alt="">
 
-  <!-- ТЕКСТ ПОВЕРХ ВСЕГО -->
+  <!-- ВЫСВЕТЛЕНИЕ -->
+  <div class="highlight-overlay" id="highlightOverlay"></div>
+
+  <!-- ТЕКСТ ПОВЕРХ ЭФФЕКТА -->
   <img class="layer"
        src="assets/текст.png"
-       style="z-index:12"
+       style="z-index:14"
        alt="">
 
 </main>
@@ -191,6 +204,8 @@
 <script>
 (async function () {
   const wishlist = document.getElementById('wishlist');
+  const overlay = document.getElementById('highlightOverlay');
+
   const products = Array.from(
     wishlist.querySelectorAll('.product')
   );
@@ -204,37 +219,6 @@
   });
 
   const preparedProducts = [];
-
-  // Холст для обводки
-  const outlineCanvas = document.createElement('canvas');
-  outlineCanvas.style.position = 'absolute';
-  outlineCanvas.style.inset = '0';
-  outlineCanvas.style.width = '100%';
-  outlineCanvas.style.height = '100%';
-  outlineCanvas.style.pointerEvents = 'none';
-  outlineCanvas.style.zIndex = '13';
-
-  wishlist.appendChild(outlineCanvas);
-
-  const outlineContext = outlineCanvas.getContext('2d');
-
-  function resizeOutlineCanvas() {
-    const rect = wishlist.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-
-    outlineCanvas.width = Math.round(rect.width * dpr);
-    outlineCanvas.height = Math.round(rect.height * dpr);
-
-    outlineContext.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  function clearOutline() {
-    const rect = wishlist.getBoundingClientRect();
-
-    outlineContext.clearRect(
-      0, 0, rect.width, rect.height
-    );
-  }
 
   function getProductAt(clientX, clientY) {
     const rect = wishlist.getBoundingClientRect();
@@ -277,62 +261,6 @@
     }
 
     return null;
-  }
-
-  function drawOutline(product) {
-    clearOutline();
-
-    if (!product) return;
-
-    const rect = wishlist.getBoundingClientRect();
-
-    const thickness = parseFloat(
-      getComputedStyle(document.documentElement)
-        .getPropertyValue('--outline-thickness')
-    ) || 2;
-
-    const color = getComputedStyle(
-      document.documentElement
-    ).getPropertyValue('--outline-color').trim() || '#bb403b';
-
-    // Рисуем тени по кругу вокруг силуэта
-    const shadows = [];
-
-    for (let angle = 0; angle < 360; angle += 45) {
-      const rad = angle * Math.PI / 180;
-
-      const dx = Math.cos(rad) * thickness;
-      const dy = Math.sin(rad) * thickness;
-
-      shadows.push(
-        `drop-shadow(${dx}px ${dy}px 0 ${color})`
-      );
-    }
-
-    outlineContext.save();
-
-    outlineContext.filter = shadows.join(' ');
-
-    // Рисуем PNG с его настоящей прозрачностью
-    outlineContext.drawImage(
-      product.element,
-      0, 0,
-      rect.width,
-      rect.height
-    );
-
-    // Убираем само изображение, оставляя только обводку
-    outlineContext.filter = 'none';
-    outlineContext.globalCompositeOperation = 'destination-out';
-
-    outlineContext.drawImage(
-      product.element,
-      0, 0,
-      rect.width,
-      rect.height
-    );
-
-    outlineContext.restore();
   }
 
   try {
@@ -382,8 +310,6 @@
       (a, b) => b.zIndex - a.zIndex
     );
 
-    resizeOutlineCanvas();
-
     wishlist.dataset.ready = 'true';
 
   } catch (error) {
@@ -396,19 +322,25 @@
     return;
   }
 
-  // Обводка при наведении
+  // Высветление при наведении на непрозрачную часть товара
   wishlist.addEventListener('pointermove', function (event) {
     const product = getProductAt(
       event.clientX,
       event.clientY
     );
 
-    drawOutline(product);
+    overlay.classList.toggle(
+      'active',
+      Boolean(product)
+    );
   });
 
-  wishlist.addEventListener('pointerleave', clearOutline);
+  // Убираем эффект при уходе курсора
+  wishlist.addEventListener('pointerleave', function () {
+    overlay.classList.remove('active');
+  });
 
-  // Переход по ссылке при клике
+  // Переход по ссылке
   wishlist.addEventListener('click', function (event) {
     if (wishlist.dataset.ready !== 'true') return;
 
@@ -424,12 +356,6 @@
         'noopener,noreferrer'
       );
     }
-  });
-
-  // Пересчёт размеров при изменении окна
-  window.addEventListener('resize', function () {
-    resizeOutlineCanvas();
-    clearOutline();
   });
 
 })();
