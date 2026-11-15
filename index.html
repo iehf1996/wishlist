@@ -20,10 +20,6 @@
     overflow-x: hidden;
   }
 
-  body {
-    display: block;
-  }
-
   .wishlist {
     position: relative;
     width: 100vw;
@@ -48,7 +44,7 @@
     cursor: pointer;
   }
 
-  /* Слой высветления всей страницы */
+  /* Белый слой поверх всего макета */
   .highlight-overlay {
     position: absolute;
     inset: 0;
@@ -61,6 +57,22 @@
 
   .highlight-overlay.active {
     opacity: 1;
+  }
+
+  /* Копия выбранного товара поверх белого слоя */
+  .highlight-product {
+    position: absolute;
+    inset: 0;
+    z-index: 14;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+    display: none;
+  }
+
+  .highlight-product.active {
+    display: block;
   }
 
   .accessible-links {
@@ -175,18 +187,20 @@
        style="z-index:11"
        alt="">
 
-  <!-- ВЫСВЕТЛЕНИЕ -->
+  <!-- БЕЛЫЙ СЛОЙ -->
   <div class="highlight-overlay" id="highlightOverlay"></div>
+
+  <!-- КОПИЯ ВЫБРАННОГО ТОВАРА -->
+  <img class="highlight-product" id="highlightProduct" src="" alt="">
 
   <!-- ТЕКСТ ПОВЕРХ ЭФФЕКТА -->
   <img class="layer"
        src="assets/текст.png"
-       style="z-index:14"
+       style="z-index:15"
        alt="">
 
 </main>
 
-<!-- Ссылки для навигации с клавиатуры -->
 <nav class="accessible-links" aria-label="Товары в вишлисте">
   <a href="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A" target="_blank" rel="noopener noreferrer">Вокруг да около</a>
   <a href="https://www.ozon.ru/product/izrazets-gamayun-tsvet-belyy-s-zolotom-10-10-sm-1842260933/?at=1mWr1V4TpPiw08mPM3n-I7hsHzCKLMH0&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer">Изразец</a>
@@ -205,6 +219,7 @@
 (async function () {
   const wishlist = document.getElementById('wishlist');
   const overlay = document.getElementById('highlightOverlay');
+  const highlightProduct = document.getElementById('highlightProduct');
 
   const products = Array.from(
     wishlist.querySelectorAll('.product')
@@ -237,13 +252,8 @@
     const relativeY = y / rect.height;
 
     for (const product of preparedProducts) {
-      const px = Math.floor(
-        relativeX * product.width
-      );
-
-      const py = Math.floor(
-        relativeY * product.height
-      );
+      const px = Math.floor(relativeX * product.width);
+      const py = Math.floor(relativeY * product.height);
 
       if (
         px < 0 || py < 0 ||
@@ -261,6 +271,20 @@
     }
 
     return null;
+  }
+
+  function showHighlight(product) {
+    if (!product) {
+      overlay.classList.remove('active');
+      highlightProduct.classList.remove('active');
+      highlightProduct.removeAttribute('src');
+      return;
+    }
+
+    highlightProduct.src = product.element.src;
+
+    overlay.classList.add('active');
+    highlightProduct.classList.add('active');
   }
 
   try {
@@ -300,9 +324,7 @@
         alpha,
         href: img.dataset.link,
         name: img.dataset.name,
-        zIndex: Number(
-          getComputedStyle(img).zIndex
-        )
+        zIndex: Number(getComputedStyle(img).zIndex)
       });
     }
 
@@ -313,34 +335,24 @@
     wishlist.dataset.ready = 'true';
 
   } catch (error) {
-    console.error(
-      'Ошибка подготовки изображений:',
-      error
-    );
-
+    console.error('Ошибка подготовки изображений:', error);
     wishlist.dataset.ready = 'error';
     return;
   }
 
-  // Высветление при наведении на непрозрачную часть товара
   wishlist.addEventListener('pointermove', function (event) {
     const product = getProductAt(
       event.clientX,
       event.clientY
     );
 
-    overlay.classList.toggle(
-      'active',
-      Boolean(product)
-    );
+    showHighlight(product);
   });
 
-  // Убираем эффект при уходе курсора
   wishlist.addEventListener('pointerleave', function () {
-    overlay.classList.remove('active');
+    showHighlight(null);
   });
 
-  // Переход по ссылке
   wishlist.addEventListener('click', function (event) {
     if (wishlist.dataset.ready !== 'true') return;
 
