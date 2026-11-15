@@ -59,6 +59,11 @@
     white-space: nowrap;
     border: 0;
   }
+
+ :root {
+  --outline-thickness: 2px;
+  --outline-color: #bb403b;
+}
 </style>
 </head>
 
@@ -190,11 +195,7 @@
     wishlist.querySelectorAll('.product')
   );
 
-  // Размер карты прозрачности.
-  // В 2 раза меньше исходного PNG по каждой стороне.
   const SCALE = 0.5;
-
-  // Минимальная непрозрачность пикселя.
   const ALPHA_THRESHOLD = 12;
 
   const canvas = document.createElement('canvas');
@@ -204,9 +205,138 @@
 
   const preparedProducts = [];
 
+  // Холст для обводки
+  const outlineCanvas = document.createElement('canvas');
+  outlineCanvas.style.position = 'absolute';
+  outlineCanvas.style.inset = '0';
+  outlineCanvas.style.width = '100%';
+  outlineCanvas.style.height = '100%';
+  outlineCanvas.style.pointerEvents = 'none';
+  outlineCanvas.style.zIndex = '13';
+
+  wishlist.appendChild(outlineCanvas);
+
+  const outlineContext = outlineCanvas.getContext('2d');
+
+  function resizeOutlineCanvas() {
+    const rect = wishlist.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    outlineCanvas.width = Math.round(rect.width * dpr);
+    outlineCanvas.height = Math.round(rect.height * dpr);
+
+    outlineContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function clearOutline() {
+    const rect = wishlist.getBoundingClientRect();
+
+    outlineContext.clearRect(
+      0, 0, rect.width, rect.height
+    );
+  }
+
+  function getProductAt(clientX, clientY) {
+    const rect = wishlist.getBoundingClientRect();
+
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    if (
+      x < 0 || y < 0 ||
+      x > rect.width || y > rect.height
+    ) {
+      return null;
+    }
+
+    const relativeX = x / rect.width;
+    const relativeY = y / rect.height;
+
+    for (const product of preparedProducts) {
+      const px = Math.floor(
+        relativeX * product.width
+      );
+
+      const py = Math.floor(
+        relativeY * product.height
+      );
+
+      if (
+        px < 0 || py < 0 ||
+        px >= product.width ||
+        py >= product.height
+      ) {
+        continue;
+      }
+
+      const index = py * product.width + px;
+
+      if (product.alpha[index] > ALPHA_THRESHOLD) {
+        return product;
+      }
+    }
+
+    return null;
+  }
+
+  function drawOutline(product) {
+    clearOutline();
+
+    if (!product) return;
+
+    const rect = wishlist.getBoundingClientRect();
+
+    const thickness = parseFloat(
+      getComputedStyle(document.documentElement)
+        .getPropertyValue('--outline-thickness')
+    ) || 2;
+
+    const color = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue('--outline-color').trim() || '#bb403b';
+
+    // Рисуем тени по кругу вокруг силуэта
+    const shadows = [];
+
+    for (let angle = 0; angle < 360; angle += 45) {
+      const rad = angle * Math.PI / 180;
+
+      const dx = Math.cos(rad) * thickness;
+      const dy = Math.sin(rad) * thickness;
+
+      shadows.push(
+        `drop-shadow(${dx}px ${dy}px 0 ${color})`
+      );
+    }
+
+    outlineContext.save();
+
+    outlineContext.filter = shadows.join(' ');
+
+    // Рисуем PNG с его настоящей прозрачностью
+    outlineContext.drawImage(
+      product.element,
+      0, 0,
+      rect.width,
+      rect.height
+    );
+
+    // Убираем само изображение, оставляя только обводку
+    outlineContext.filter = 'none';
+    outlineContext.globalCompositeOperation = 'destination-out';
+
+    outlineContext.drawImage(
+      product.element,
+      0, 0,
+      rect.width,
+      rect.height
+    );
+
+    outlineContext.restore();
+  }
+
   try {
     for (const img of products) {
-      // Дожидаемся полной загрузки изображения
       if (!img.complete || !img.naturalWidth) {
         await new Promise((resolve, reject) => {
           img.onload = resolve;
@@ -223,15 +353,12 @@
       canvas.height = height;
 
       context.clearRect(0, 0, width, height);
-
       context.drawImage(img, 0, 0, width, height);
 
       const imageData = context.getImageData(
         0, 0, width, height
       );
 
-      // Сохраняем только альфа-канал.
-      // Это значительно экономнее по памяти.
       const alpha = new Uint8Array(width * height);
 
       for (let i = 0; i < alpha.length; i++) {
@@ -251,16 +378,17 @@
       });
     }
 
-    // Сначала проверяем верхние слои
     preparedProducts.sort(
       (a, b) => b.zIndex - a.zIndex
     );
+
+    resizeOutlineCanvas();
 
     wishlist.dataset.ready = 'true';
 
   } catch (error) {
     console.error(
-      'Не удалось подготовить изображения для проверки кликов:',
+      'Ошибка подготовки изображений:',
       error
     );
 
@@ -268,56 +396,40 @@
     return;
   }
 
+  // Обводка при наведении
+  wishlist.addEventListener('pointermove', function (event) {
+    const product = getProductAt(
+      event.clientX,
+      event.clientY
+    );
+
+    drawOutline(product);
+  });
+
+  wishlist.addEventListener('pointerleave', clearOutline);
+
+  // Переход по ссылке при клике
   wishlist.addEventListener('click', function (event) {
     if (wishlist.dataset.ready !== 'true') return;
 
-    const rect = wishlist.getBoundingClientRect();
+    const product = getProductAt(
+      event.clientX,
+      event.clientY
+    );
 
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    // Клик вне области макета
-    if (
-      x < 0 || y < 0 ||
-      x > rect.width || y > rect.height
-    ) {
-      return;
-    }
-
-    const relativeX = x / rect.width;
-    const relativeY = y / rect.height;
-
-    // Ищем верхний непрозрачный товар
-    for (const product of preparedProducts) {
-      const px = Math.floor(
-        relativeX * product.width
+    if (product) {
+      window.open(
+        product.href,
+        '_blank',
+        'noopener,noreferrer'
       );
-
-      const py = Math.floor(
-        relativeY * product.height
-      );
-
-      if (
-        px < 0 || py < 0 ||
-        px >= product.width ||
-        py >= product.height
-      ) {
-        continue;
-      }
-
-      const index = py * product.width + px;
-      const alpha = product.alpha[index];
-
-      if (alpha > ALPHA_THRESHOLD) {
-        window.open(
-          product.href,
-          '_blank',
-          'noopener,noreferrer'
-        );
-
-        return;
-      }
     }
+  });
+
+  // Пересчёт размеров при изменении окна
+  window.addEventListener('resize', function () {
+    resizeOutlineCanvas();
+    clearOutline();
   });
 
 })();
