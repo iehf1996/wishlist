@@ -9,69 +9,39 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; background: #eee7dc; }
   body { padding: 18px 12px; }
-  .wishlist {
-    position: relative;
-    width: min(100%, 1100px);
-    margin: 0 auto;
-    aspect-ratio: 3500 / 3063;
-    overflow: hidden;
-  }
-  .layer {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    pointer-events: none;
-    user-select: none;
-  }
-  .product-link {
-    position: absolute;
-    z-index: 10;
-    display: block;
-    cursor: pointer;
-    background: transparent;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .product-link:focus-visible {
-    outline: 3px dashed #a93f38;
-    outline-offset: 2px;
-    background: rgba(255,255,255,.12);
-  }
-  @media (max-width: 600px) {
-    body { padding: 6px 0; }
-    .wishlist { width: 100%; }
-  }
+  .wishlist { position: relative; width: min(100%, 1100px); margin: 0 auto; aspect-ratio: 3500 / 3063; overflow: hidden; isolation: isolate; }
+  .layer { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: fill; pointer-events: none; user-select: none; }
+  .product-link { position: absolute; inset: 0; display: block; background: rgba(0,0,0,.001); cursor: pointer; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; -webkit-mask-mode: alpha; mask-mode: alpha; -webkit-tap-highlight-color: transparent; }
+  .product-link:focus-visible { outline: 3px dashed #a93f38; outline-offset: -4px; }
+  @media (max-width: 600px) { body { padding: 6px 0; } .wishlist { width: 100%; } }
 </style>
 </head>
 <body>
 <main class="wishlist" aria-label="Вишлист">
-  <img class="layer" src="assets/0_фон.png" alt="">
-  <img class="layer" src="assets/1_изразец.png" alt="">
-  <img class="layer" src="assets/2_вокруг да около.png" alt="">
-  <img class="layer" src="assets/3_румбокс.png" alt="">
-  <img class="layer" src="assets/4_карты таро.png" alt="">
-  <img class="layer" src="assets/5_спасибо что спросил.png" alt="">
-  <img class="layer" src="assets/6_страдающее средневековье.png" alt="">
-  <img class="layer" src="assets/7_насыпные свечи.png" alt="">
-  <img class="layer" src="assets/8_пазлы.png" alt="">
-  <img class="layer" src="assets/9_скалка.png" alt="">
-  <img class="layer" src="assets/10_штампы.png" alt="">
-  <img class="layer" src="assets/11_ковровая вышивка.png" alt="">
-  <img class="layer" src="assets/текст.png" alt="Текст вишлиста">
-  <!-- Кликабельные области товаров -->
-  <a class="product-link" href="https://www.ozon.ru/product/izrazets-gamayun-tsvet-belyy-s-zolotom-10-10-sm-1842260933/?at=1mWr1V4TpPiw08mPM3n-I7hsHzCKLMH0&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Изразец керамический" title="Изразец керамический" style="left:4.62857%;top:12.96115%;width:17.14286%;height:18.70715%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Вокруг да около»" title="Настольная игра «Вокруг да около»" style="left:14.37143%;top:18.25008%;width:19.60000%;height:18.60921%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/rumboks-s-russkoy-instruktsiey-kupolom-kraskoy-kistochkoy-podsvetkoy-magazin-volshebnyh-1183770862/?at=1pSo1RrfpvdhbQcg3vUxXTqr24czI2zH&is_apparel_size_selected=true&sh=USWH6q6xvA&oos_search=false&hideable_rating=true" target="_blank" rel="noopener noreferrer" aria-label="Румбокс «Магазин волшебных палочек»" title="Румбокс «Магазин волшебных палочек»" style="left:4.62857%;top:37.34900%;width:29.08571%;height:16.97682%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/komplekt-taro-triumfy-luny-komplekt-koloda-s-knigoy-5172182244/?at=1gep1Zs5aJQN6BmniqopUTqxb4bUbSse&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Карты таро «Триумфы луны»" title="Карты таро «Триумфы луны»" style="left:19.65714%;top:44.85798%;width:21.11429%;height:18.83774%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/spasibo-chto-sprosil-3-nastolnaya-igra-na-sblizhenie-1125202100/?at=1pWo1XDj91aGXBzMjNRJ-luJUpsUi1r9&from_sku=1125201233&oos_search=false&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Спасибо, что спросил»" title="Настольная игра «Спасибо, что спросил»" style="left:29.08571%;top:20.53542%;width:16.80000%;height:16.84623%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/nastolnaya-igra-stradayushchee-srednevekove-177595533/?at=1mWr1-jyECx7bebo6hraIOh3fcLm1JNv&sh=USWH6oDzEQ" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Страдающее средневековье»" title="Настольная игра «Страдающее средневековье»" style="left:43.71429%;top:38.91610%;width:20.54286%;height:16.42181%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/nasypnye-svechi-1-kg-v-granulah-fitil-2-m-nasypnoy-vosk-dlya-svechey-nabor-dlya-sozdaniya-180746987/?at=1pSo1XYXX3EWlSGn9jHobLKUPpZq8gG7&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Насыпные свечи" title="Насыпные свечи" style="left:60.00000%;top:44.40091%;width:17.54286%;height:17.27065%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/pazl-bosh-sad-zemnyh-naslazhdeniy-1000-detaley-stradayushchee-srednevekove-1352280891/?at=1sSo1V0-FdPxaAWgTSiaga65IBOwBpKU&from_sku=1352280891&oos_search=false&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Пазлы" title="Пазлы" style="left:37.85714%;top:20.60072%;width:26.42857%;height:26.73849%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/3d-kulinar-skalka-s-uzorom-729608316/?at=1sSo1_-Nb9DSfVW3TOCaJ4Tn6I0jbcYS&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Фигурная скалка с желудями" title="Фигурная скалка с желудями" style="left:70.22857%;top:13.74469%;width:24.57143%;height:13.71205%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/derevyannye-shtampy-russkiy-i-latinskiy-alfavit-bukvy-i-tsifry-derevyannyy-keys-3591251164/?at=1pSo1T31MvfMHg8tvqRkmudz7v63EUOX&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Штампы алфавитные" title="Штампы алфавитные" style="left:61.17143%;top:26.70584%;width:18.74286%;height:21.97192%"></a>
-  <a class="product-link" href="https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-gusi-1801598852/?at=1mWr1RIVU4WxPn_zrrCqrqBL4_z8YppB&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Набор для ковровой вышивки «Гуси»" title="Набор для ковровой вышивки «Гуси»" style="left:74.00000%;top:34.08423%;width:20.77143%;height:21.71074%"></a>
+  <img class="layer" style="z-index:0" src="assets/0_фон.png" alt="">
+  <img class="layer" style="z-index:1" src="assets/2_вокруг да около.png" alt="">
+  <a class="product-link" style="z-index:1;-webkit-mask-image:url('assets/2_вокруг да около.png');mask-image:url('assets/2_вокруг да около.png')" href="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Вокруг да около»" title="Настольная игра «Вокруг да около»"></a>
+  <img class="layer" style="z-index:2" src="assets/1_изразец.png" alt="">
+  <a class="product-link" style="z-index:2;-webkit-mask-image:url('assets/1_изразец.png');mask-image:url('assets/1_изразец.png')" href="https://www.ozon.ru/product/izrazets-gamayun-tsvet-belyy-s-zolotom-10-10-sm-1842260933/?at=1mWr1V4TpPiw08mPM3n-I7hsHzCKLMH0&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Изразец керамический" title="Изразец керамический"></a>
+  <img class="layer" style="z-index:3" src="assets/3_румбокс.png" alt="">
+  <a class="product-link" style="z-index:3;-webkit-mask-image:url('assets/3_румбокс.png');mask-image:url('assets/3_румбокс.png')" href="https://www.ozon.ru/product/rumboks-s-russkoy-instruktsiey-kupolom-kraskoy-kistochkoy-podsvetkoy-magazin-volshebnyh-1183770862/?at=1pSo1RrfpvdhbQcg3vUxXTqr24czI2zH&is_apparel_size_selected=true&sh=USWH6q6xvA&oos_search=false&hideable_rating=true" target="_blank" rel="noopener noreferrer" aria-label="Румбокс «Магазин волшебных палочек»" title="Румбокс «Магазин волшебных палочек»"></a>
+  <img class="layer" style="z-index:4" src="assets/4_карты таро.png" alt="">
+  <a class="product-link" style="z-index:4;-webkit-mask-image:url('assets/4_карты таро.png');mask-image:url('assets/4_карты таро.png')" href="https://www.ozon.ru/product/komplekt-taro-triumfy-luny-komplekt-koloda-s-knigoy-5172182244/?at=1gep1Zs5aJQN6BmniqopUTqxb4bUbSse&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Карты таро «Триумфы луны»" title="Карты таро «Триумфы луны»"></a>
+  <img class="layer" style="z-index:5" src="assets/8_пазлы.png" alt="">
+  <a class="product-link" style="z-index:5;-webkit-mask-image:url('assets/8_пазлы.png');mask-image:url('assets/8_пазлы.png')" href="https://www.ozon.ru/product/pazl-bosh-sad-zemnyh-naslazhdeniy-1000-detaley-stradayushchee-srednevekove-1352280891/?at=1sSo1V0-FdPxaAWgTSiaga65IBOwBpKU&from_sku=1352280891&oos_search=false&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Пазлы" title="Пазлы"></a>
+  <img class="layer" style="z-index:6" src="assets/5_спасибо что спросил.png" alt="">
+  <a class="product-link" style="z-index:6;-webkit-mask-image:url('assets/5_спасибо что спросил.png');mask-image:url('assets/5_спасибо что спросил.png')" href="https://www.ozon.ru/product/spasibo-chto-sprosil-3-nastolnaya-igra-na-sblizhenie-1125202100/?at=1pWo1XDj91aGXBzMjNRJ-luJUpsUi1r9&from_sku=1125201233&oos_search=false&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Спасибо, что спросил»" title="Настольная игра «Спасибо, что спросил»"></a>
+  <img class="layer" style="z-index:7" src="assets/6_страдающее средневековье.png" alt="">
+  <a class="product-link" style="z-index:7;-webkit-mask-image:url('assets/6_страдающее средневековье.png');mask-image:url('assets/6_страдающее средневековье.png')" href="https://www.ozon.ru/product/nastolnaya-igra-stradayushchee-srednevekove-177595533/?at=1mWr1-jyECx7bebo6hraIOh3fcLm1JNv&sh=USWH6oDzEQ" target="_blank" rel="noopener noreferrer" aria-label="Настольная игра «Страдающее средневековье»" title="Настольная игра «Страдающее средневековье»"></a>
+  <img class="layer" style="z-index:8" src="assets/9_скалка.png" alt="">
+  <a class="product-link" style="z-index:8;-webkit-mask-image:url('assets/9_скалка.png');mask-image:url('assets/9_скалка.png')" href="https://www.ozon.ru/product/3d-kulinar-skalka-s-uzorom-729608316/?at=1sSo1_-Nb9DSfVW3TOCaJ4Tn6I0jbcYS&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Фигурная скалка с желудями" title="Фигурная скалка с желудями"></a>
+  <img class="layer" style="z-index:9" src="assets/11_ковровая вышивка.png" alt="">
+  <a class="product-link" style="z-index:9;-webkit-mask-image:url('assets/11_ковровая вышивка.png');mask-image:url('assets/11_ковровая вышивка.png')" href="https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-gusi-1801598852/?at=1mWr1RIVU4WxPn_zrrCqrqBL4_z8YppB&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Набор для ковровой вышивки «Гуси»" title="Набор для ковровой вышивки «Гуси»"></a>
+  <img class="layer" style="z-index:10" src="assets/7_насыпные свечи.png" alt="">
+  <a class="product-link" style="z-index:10;-webkit-mask-image:url('assets/7_насыпные свечи.png');mask-image:url('assets/7_насыпные свечи.png')" href="https://www.ozon.ru/product/nasypnye-svechi-1-kg-v-granulah-fitil-2-m-nasypnoy-vosk-dlya-svechey-nabor-dlya-sozdaniya-180746987/?at=1pSo1XYXX3EWlSGn9jHobLKUPpZq8gG7&is_apparel_size_selected=true&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Насыпные свечи" title="Насыпные свечи"></a>
+  <img class="layer" style="z-index:11" src="assets/10_штампы.png" alt="">
+  <a class="product-link" style="z-index:11;-webkit-mask-image:url('assets/10_штампы.png');mask-image:url('assets/10_штампы.png')" href="https://www.ozon.ru/product/derevyannye-shtampy-russkiy-i-latinskiy-alfavit-bukvy-i-tsifry-derevyannyy-keys-3591251164/?at=1pSo1T31MvfMHg8tvqRkmudz7v63EUOX&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer" aria-label="Штампы алфавитные" title="Штампы алфавитные"></a>
+  <img class="layer" style="z-index:12" src="assets/текст.png" alt="">
 </main>
 </body>
 </html>
