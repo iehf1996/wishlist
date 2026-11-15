@@ -44,22 +44,7 @@
     cursor: pointer;
   }
 
-  /* Белый слой поверх всего макета */
-  .highlight-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 13;
-    background: rgba(255, 255, 255, 0.2);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-
-  .highlight-overlay.active {
-    opacity: 1;
-  }
-
-  /* Копия выбранного товара поверх белого слоя */
+  /* Выбранное изображение поверх остальных */
   .highlight-product {
     position: absolute;
     inset: 0;
@@ -69,6 +54,12 @@
     object-fit: fill;
     pointer-events: none;
     display: none;
+
+    /* Белое свечение по контуру PNG */
+    filter:
+      drop-shadow(0 0 5px rgba(255, 255, 255, 0.95))
+      drop-shadow(0 0 12px rgba(255, 255, 255, 0.8))
+      drop-shadow(0 0 22px rgba(255, 255, 255, 0.55));
   }
 
   .highlight-product.active {
@@ -187,13 +178,10 @@
        style="z-index:11"
        alt="">
 
-  <!-- БЕЛЫЙ СЛОЙ -->
-  <div class="highlight-overlay" id="highlightOverlay"></div>
-
-  <!-- КОПИЯ ВЫБРАННОГО ТОВАРА -->
+  <!-- КОПИЯ ВЫБРАННОГО ИЗОБРАЖЕНИЯ СО СВЕЧЕНИЕМ -->
   <img class="highlight-product" id="highlightProduct" src="" alt="">
 
-  <!-- ТЕКСТ ПОВЕРХ ЭФФЕКТА -->
+  <!-- ТЕКСТ -->
   <img class="layer"
        src="assets/текст.png"
        style="z-index:15"
@@ -218,7 +206,6 @@
 <script>
 (async function () {
   const wishlist = document.getElementById('wishlist');
-  const overlay = document.getElementById('highlightOverlay');
   const highlightProduct = document.getElementById('highlightProduct');
 
   const products = Array.from(
@@ -275,15 +262,12 @@
 
   function showHighlight(product) {
     if (!product) {
-      overlay.classList.remove('active');
       highlightProduct.classList.remove('active');
       highlightProduct.removeAttribute('src');
       return;
     }
 
     highlightProduct.src = product.element.src;
-
-    overlay.classList.add('active');
     highlightProduct.classList.add('active');
   }
 
