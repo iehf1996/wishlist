@@ -77,6 +77,69 @@
     white-space: nowrap;
     border: 0;
   }
+
+  /* Контекстное меню подарка */
+  .gift-menu {
+    position: fixed;
+    z-index: 10000;
+    display: none;
+    min-width: 205px;
+    max-width: min(270px, calc(100vw - 24px));
+    padding: 7px;
+    color: #3d302b;
+    background: #fffaf2;
+    border: 1px solid rgba(92, 63, 48, .22);
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(35, 24, 18, .22);
+    font: 14px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  .gift-menu.open { display: block; }
+
+  .gift-menu__heading {
+    padding: 8px 10px 7px;
+    color: #80675a;
+    font-size: 12px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .gift-menu__button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .gift-menu__button:hover,
+  .gift-menu__button:focus-visible {
+    background: #f0e5d8;
+    outline: none;
+  }
+
+  .gift-menu__button:disabled {
+    opacity: .55;
+    cursor: wait;
+  }
+
+  .gift-menu__status {
+    padding: 8px 10px 5px;
+    color: #80675a;
+    font-size: 12px;
+  }
+
+  .gift-menu__separator {
+    height: 1px;
+    margin: 5px 4px;
+    background: rgba(92, 63, 48, .14);
+  }
+
 </style>
 </head>
 
@@ -95,6 +158,7 @@
        src="assets/2_вокруг да около.png"
        data-link="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A"
        data-name="Настольная игра «Вокруг да около»"
+       data-id="p01"
        style="z-index:1"
        alt="">
 
@@ -103,6 +167,7 @@
        src="assets/1_изразец.png"
        data-link="https://www.ozon.ru/product/izrazets-gamayun-tsvet-belyy-s-zolotom-10-10-sm-1842260933/?at=1mWr1V4TpPiw08mPM3n-I7hsHzCKLMH0&is_apparel_size_selected=true&sh=USWH6pQGVA"
        data-name="Изразец керамический"
+       data-id="p02"
        style="z-index:2"
        alt="">
 
@@ -111,6 +176,7 @@
        src="assets/изразец_кот баюн.png"
        data-link="https://www.ozon.ru/product/izrazets-kot-bayun-tsvet-belyy-s-zolotom-10-10-sm-1842266295/?at=1oyr1P1qiL8bFgeALY7UZMEHuY7atOyo&is_apparel_size_selected=true&sh=USWH6j_9xg"
        data-name="Изразец керамический вар 1"
+       data-id="p03"
        style="z-index:3"
        alt="">
 
@@ -119,6 +185,7 @@
        src="assets/изразец_берегиня.png"
        data-link="https://www.ozon.ru/product/izrazets-bereginya-rusalka-tsvet-belyy-s-zolotom-10-10-sm-1842292702/?at=1oyr1XGmkREAhLzGI6gREIO2NJnzpGU8&is_apparel_size_selected=true&sh=USWH6j_9xg"
        data-name="Изразец керамический вар 2"
+       data-id="p04"
        style="z-index:4"
        alt="">
 
@@ -127,6 +194,7 @@
        src="assets/3_румбокс.png"
        data-link="https://www.ozon.ru/product/rumboks-s-russkoy-instruktsiey-kupolom-kraskoy-kistochkoy-podsvetkoy-magazin-volshebnyh-1183770862/?at=1pSo1RrfpvdhbQcg3vUxXTqr24czI2zH&is_apparel_size_selected=true&sh=USWH6q6xvA&oos_search=false&hideable_rating=true"
        data-name="Румбокс «Магазин волшебных палочек»"
+       data-id="p05"
        style="z-index:5"
        alt="">
 
@@ -135,6 +203,7 @@
        src="assets/4_карты таро.png"
        data-link="https://www.ozon.ru/product/komplekt-taro-triumfy-luny-komplekt-koloda-s-knigoy-5172182244/?at=1gep1Zs5aJQN6BmniqopUTqxb4bUbSse&is_apparel_size_selected=true&sh=USWH6pQGVA"
        data-name="Карты таро «Триумфы луны»"
+       data-id="p06"
        style="z-index:6"
        alt="">
 
@@ -143,6 +212,7 @@
        src="assets/карты таро.png"
        data-link="https://www.ozon.ru/product/kollektsionnoe-izdanie-russkoe-taro-lubok-sergeya-savchenko-4986922446/?oos_search=false&sh=USWH6veGqQ"
        data-name="Карты таро вар 1"
+       data-id="p07"
        style="z-index:7"
        alt="">
 
@@ -151,6 +221,7 @@
        src="assets/8_пазлы.png"
        data-link="https://www.ozon.ru/product/pazl-bosh-sad-zemnyh-naslazhdeniy-1000-detaley-stradayushchee-srednevekove-1352280891/?at=1sSo1V0-FdPxaAWgTSiaga65IBOwBpKU&from_sku=1352280891&oos_search=false&sh=USWH6pQGVA"
        data-name="Пазлы"
+       data-id="p08"
        style="z-index:8"
        alt="">
 
@@ -159,6 +230,7 @@
        src="assets/пазлы_флагмандские пословицы.png"
        data-link="https://www.ozon.ru/product/pazl-breygel-starshiy-flamandskie-poslovitsy-1000-detaley-stradayushchee-srednevekove-1769823865/?at=1sSo1T9EcB5hiNbM-ZZqyM_wdX0Ff79U&is_apparel_size_selected=true&sh=USWH6rQQFQ"
        data-name="Пазлы, вар 1"
+       data-id="p09"
        style="z-index:9"
        alt="">
 
@@ -167,6 +239,7 @@
        src="assets/пазлы_тихая обитель.png"
        data-link="https://www.ozon.ru/product/stella-pazl-levitan-i-i-tihaya-obitel-1000-detaley-172463332/?at=1sSo1UMgGhfrTwOul7m4DUaZVtioMFW7&is_apparel_size_selected=true&sh=USWH6rQQFQ"
        data-name="Пазлы, вар 2"
+       data-id="p10"
        style="z-index:10"
        alt="">
 
@@ -175,6 +248,7 @@
        src="assets/пазлы_девочка с персиками.png"
        data-link="https://www.ozon.ru/product/stella-pazl-serov-v-a-devochka-s-persikami-1000-detaley-192521332/?at=1sSo1UMgGhfrTwOul7m4DUaZVtioMFW7&from_sku=172463332&oos_search=false&sh=USWH6rQQFQ"
        data-name="Пазлы, вар 3"
+       data-id="p11"
        style="z-index:11"
        alt="">
 
@@ -183,6 +257,7 @@
        src="assets/пазлы_заросший пруд.png"
        data-link="https://www.ozon.ru/product/pazl-stella-1500-detaley-elementov-zarosshiy-prud-tretyakovskaya-galereya-203389682/?at=1sSo1VJ71ZfcNgV79_lv8LssP4zHontN&is_apparel_size_selected=true&sh=USWH6rQQFQ"
        data-name="Пазлы, вар 4"
+       data-id="p12"
        style="z-index:12"
        alt="">
 
@@ -191,6 +266,7 @@
        src="assets/пазлы_сватовство майора.png"
        data-link="https://www.ozon.ru/product/stella-pazl-fedotov-p-a-svatovstvo-mayora-1000-detaley-352905070/?at=1sSo1R4c318HX5eONgLNG55vOZGgN6yv&is_apparel_size_selected=true&sh=USWH6rQQFQ"
        data-name="Пазлы, вар 5"
+       data-id="p13"
        style="z-index:13"
        alt="">
 
@@ -199,6 +275,7 @@
        src="assets/5_спасибо что спросил.png"
        data-link="https://www.ozon.ru/product/spasibo-chto-sprosil-3-nastolnaya-igra-na-sblizhenie-1125202100/?at=1pWo1XDj91aGXBzMjNRJ-luJUpsUi1r9&from_sku=1125201233&oos_search=false&sh=USWH6pQGVA"
        data-name="Настольная игра «Спасибо, что спросил»"
+       data-id="p14"
        style="z-index:14"
        alt="">
 
@@ -207,6 +284,7 @@
        src="assets/6_страдающее средневековье.png"
        data-link="https://www.ozon.ru/product/nastolnaya-igra-stradayushchee-srednevekove-177595533/?at=1mWr1-jyECx7bebo6hraIOh3fcLm1JNv&sh=USWH6oDzEQ"
        data-name="Настольная игра «Страдающее средневековье»"
+       data-id="p15"
        style="z-index:15"
        alt="">
 
@@ -215,6 +293,7 @@
        src="assets/9_скалка.png"
        data-link="https://www.ozon.ru/product/3d-kulinar-skalka-s-uzorom-729608316/?at=1sSo1_-Nb9DSfVW3TOCaJ4Tn6I0jbcYS&sh=USWH6pQGVA"
        data-name="Фигурная скалка с желудями"
+       data-id="p16"
        style="z-index:16"
        alt="">
 
@@ -223,6 +302,7 @@
        src="assets/11_ковровая вышивка.png"
        data-link="https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-gusi-1801598852/?at=1mWr1RIVU4WxPn_zrrCqrqBL4_z8YppB&is_apparel_size_selected=true&sh=USWH6pQGVA"
        data-name="Набор для ковровой вышивки «Гуси»"
+       data-id="p17"
        style="z-index:17"
        alt="">
 
@@ -231,6 +311,7 @@
        src="assets/ковровая вышивка_матрешка.png"
        data-link="https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-matreshka-3634820717/?at=1oyr1VovXlmf7W7Dxh3Z1m4DF6JmMSQL&is_apparel_size_selected=true&sh=USWH6phYvw"
        data-name="Ковровая вышивка, вар 1"
+       data-id="p18"
        style="z-index:18"
        alt="">
 
@@ -239,6 +320,7 @@
        src="assets/11_ковровая вышивка.png"
        data-link="https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-gusi-1801598852/?at=1mWr1RIVU4WxPn_zrrCqrqBL4_z8YppB&is_apparel_size_selected=true&sh=USWH6pQGVA"
        data-name="Ковровая вышивка, вар 2"
+       data-id="p17"
        style="z-index:19"
        alt="">
 
@@ -247,6 +329,7 @@
        src="assets/7_насыпные свечи.png"
        data-link="https://www.ozon.ru/product/nasypnye-svechi-1-kg-v-granulah-fitil-2-m-nasypnoy-vosk-dlya-svechey-nabor-dlya-sozdaniya-180746987/?at=1pSo1XYXX3EWlSGn9jHobLKUPpZq8gG7&is_apparel_size_selected=true&sh=USWH6pQGVA"
        data-name="Насыпные свечи"
+       data-id="p19"
        style="z-index:20"
        alt="">
 
@@ -255,6 +338,7 @@
        src="assets/10_штампы.png"
        data-link="https://www.ozon.ru/product/derevyannye-shtampy-russkiy-i-latinskiy-alfavit-bukvy-i-tsifry-derevyannyy-keys-3591251164/?at=1pSo1T31MvfMHg8tvqRkmudz7v63EUOX&sh=USWH6pQGVA"
        data-name="Штампы алфавитные"
+       data-id="p20"
        style="z-index:21"
        alt="">
 
@@ -263,6 +347,7 @@
        src="assets/штампы.png"
        data-link="https://www.ozon.ru/product/shtampy-russkiy-alfavit-bukvy-i-tsifry-2125206946/?at=1pSo1TlSMJ0du17N2goLnvsN-LJGx_Lf&sh=USWH6s-h9w"
        data-name="Штампы вар 1"
+       data-id="p21"
        style="z-index:22"
        alt="">
 
@@ -272,6 +357,7 @@
        src="assets/набор крепления кнопок.png"
        data-link="https://www.ozon.ru/product/nabor-dlya-rukodeliya-knopki-dlya-odezhdy-plastikovye-t5-150-shtuk-ustanovshchik-knopok-konteyner-853086466/?at=1pSo1MS4DqKq-rUJpLGM4EaWT7_00Zj8&is_apparel_size_selected=true&sh=USWH6uqtCQ"
        data-name="набор крепления кнопок"
+       data-id="p22"
        style="z-index:23"
        alt="">
 
@@ -280,6 +366,7 @@
        src="assets/влажная палитра.png"
        data-link="https://www.ozon.ru/product/vlazhnaya-palitra-dlya-akrilovyh-krasok-mokraya-palitra-4320266643/?at=1oCr1_h0Wk89No-WdTcegp4FOn3vwCYJ&is_apparel_size_selected=true&sh=USWH6huLVw"
        data-name="влажная палитра"
+       data-id="p23"
        style="z-index:24"
        alt="">
 
@@ -288,6 +375,7 @@
        src="assets/триммер.png"
        data-link="https://www.ozon.ru/product/trimmer-elektricheskiy-dlya-brovey-i-litsa-s-led-podsvetkoy-portativnyy-rozovyy-zoloto-4368661820/?at=1oCr1-kImaawVy3iz2V_WJ7eZ14AtOXd&is_apparel_size_selected=true&sh=USWH6mCLeQ"
        data-name="триммер"
+       data-id="p24"
        style="z-index:25"
        alt="">
 
@@ -296,6 +384,7 @@
        src="assets/наклейки.png"
        data-link="https://www.ozon.ru/product/nakleyki-srednevekovye-koty-nabor-dekorativnyh-nakleek-3107974138/?at=1oCr1M-B2KwHFpGVLV979KNojARfSjvV&is_apparel_size_selected=true&sh=USWH6v2POA"
        data-name="наклейки"
+       data-id="p25"
        style="z-index:26"
        alt="">
 
@@ -304,6 +393,7 @@
        src="assets/митенки.png"
        data-link="https://www.ozon.ru/product/mitenki-orenshal-1-para-1970133981/?at=1oCr1P03Ix8Ujg63SjdA5fKLWgWEDmxY&is_apparel_size_selected=true&sh=USWH6v2POA"
        data-name="митенки"
+       data-id="p26"
        style="z-index:27"
        alt="">
 
@@ -312,6 +402,7 @@
        src="assets/перчатки.png"
        data-link="https://www.ozon.ru/product/perchatki-orenshal-1-para-4684699563/?oos_search=false&sh=USWH6v2POA"
        data-name="перчатки"
+       data-id="p27"
        style="z-index:28"
        alt="">
 
@@ -320,6 +411,7 @@
        src="assets/брошь таверна.png"
        data-link="https://www.ozon.ru/product/brosh-vyveska-taverny-dyra-v-stene-kindom-come-deliverance-3559253510/?at=1oCr1NgDnwvTH9lu2PF3CAA_iS9lG9qr&is_apparel_size_selected=true&sh=USWH6v2POA"
        data-name="брошь"
+       data-id="p28"
        style="z-index:29"
        alt="">
 
@@ -335,6 +427,16 @@
        alt="">
 
 </main>
+
+<div class="gift-menu" id="giftMenu" role="menu" aria-label="Действия с подарком">
+  <div class="gift-menu__heading" id="giftMenuHeading"></div>
+  <div class="gift-menu__status" id="giftMenuStatus"></div>
+  <div class="gift-menu__separator"></div>
+  <button class="gift-menu__button" id="giftOpenButton" type="button">Открыть товар</button>
+  <button class="gift-menu__button" id="giftBookButton" type="button">Забронировать</button>
+  <button class="gift-menu__button" id="giftCancelButton" type="button" hidden>Отменить мою бронь</button>
+</div>
+
 
 <nav class="accessible-links" aria-label="Товары в вишлисте">
   <a href="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A" target="_blank" rel="noopener noreferrer">Вокруг да около</a>
@@ -367,37 +469,115 @@
   <a href="https://www.ozon.ru/product/brosh-vyveska-taverny-dyra-v-stene-kindom-come-deliverance-3559253510/?at=1oCr1NgDnwvTH9lu2PF3CAA_iS9lG9qr&is_apparel_size_selected=true&sh=USWH6v2POA" target="_blank" rel="noopener noreferrer">брошь</a>
 </nav>
 
+
 <script>
 (async function () {
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxaUn9FpMI62ue26tnh6SUO9Nv3q45aZC-rbo86lQGNnciX02pcYojMT0k96bZnUC2v2g/exec';
+
   const wishlist = document.getElementById('wishlist');
   const highlightProduct = document.getElementById('highlightProduct');
+  const menu = document.getElementById('giftMenu');
+  const menuHeading = document.getElementById('giftMenuHeading');
+  const menuStatus = document.getElementById('giftMenuStatus');
+  const openButton = document.getElementById('giftOpenButton');
+  const bookButton = document.getElementById('giftBookButton');
+  const cancelButton = document.getElementById('giftCancelButton');
 
-  const products = Array.from(
-    wishlist.querySelectorAll('.product')
-  );
-
+  const productElements = Array.from(wishlist.querySelectorAll('.product'));
   const SCALE = 0.5;
   const ALPHA_THRESHOLD = 12;
+  const LONG_PRESS_MS = 550;
+  const STORAGE_PREFIX = 'wishlist-booking-';
 
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d', {
-    willReadFrequently: true
-  });
-
+  const context = canvas.getContext('2d', { willReadFrequently: true });
   const preparedProducts = [];
+  const statuses = new Map();
+
+  let activeProduct = null;
+  let longPressTimer = null;
+  let longPressTriggered = false;
+  let pointerStart = null;
+
+  function jsonp(params) {
+    return new Promise((resolve, reject) => {
+      const callbackName = 'wishlistCallback_' +
+        Date.now() + '_' + Math.random().toString(36).slice(2);
+
+      const script = document.createElement('script');
+      const query = new URLSearchParams({
+        ...params,
+        callback: callbackName
+      });
+
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error('Сервер не ответил. Попробуйте ещё раз.'));
+      }, 15000);
+
+      function cleanup() {
+        clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+      }
+
+      window[callbackName] = (data) => {
+        cleanup();
+        resolve(data);
+      };
+
+      script.onerror = () => {
+        cleanup();
+        reject(new Error('Не удалось связаться с сервером.'));
+      };
+
+      script.src = API_URL + '?' + query.toString();
+      document.head.appendChild(script);
+    });
+  }
+
+  function getSavedToken(id) {
+    try {
+      return localStorage.getItem(STORAGE_PREFIX + id);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveToken(id, token) {
+    try {
+      localStorage.setItem(STORAGE_PREFIX + id, token);
+    } catch (error) {
+      console.warn('Не удалось сохранить токен бронирования:', error);
+    }
+  }
+
+  function removeToken(id) {
+    try {
+      localStorage.removeItem(STORAGE_PREFIX + id);
+    } catch (error) {
+      console.warn('Не удалось удалить токен бронирования:', error);
+    }
+  }
+
+  async function refreshStatuses() {
+    const result = await jsonp({ action: 'list' });
+    if (!result || !result.success || !Array.isArray(result.products)) {
+      throw new Error(result && result.error ? result.error : 'Не удалось получить список подарков.');
+    }
+
+    statuses.clear();
+    result.products.forEach(product => {
+      statuses.set(String(product.id), product.status || 'Свободно');
+    });
+  }
 
   function getProductAt(clientX, clientY) {
     const rect = wishlist.getBoundingClientRect();
-
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
-    if (
-      x < 0 || y < 0 ||
-      x > rect.width || y > rect.height
-    ) {
-      return null;
-    }
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
 
     const relativeX = x / rect.width;
     const relativeY = y / rect.height;
@@ -406,19 +586,10 @@
       const px = Math.floor(relativeX * product.width);
       const py = Math.floor(relativeY * product.height);
 
-      if (
-        px < 0 || py < 0 ||
-        px >= product.width ||
-        py >= product.height
-      ) {
-        continue;
-      }
+      if (px < 0 || py < 0 || px >= product.width || py >= product.height) continue;
 
       const index = py * product.width + px;
-
-      if (product.alpha[index] > ALPHA_THRESHOLD) {
-        return product;
-      }
+      if (product.alpha[index] > ALPHA_THRESHOLD) return product;
     }
 
     return null;
@@ -435,8 +606,147 @@
     highlightProduct.classList.add('active');
   }
 
+  function closeMenu() {
+    menu.classList.remove('open');
+    activeProduct = null;
+  }
+
+  function placeMenu(clientX, clientY) {
+    menu.classList.add('open');
+
+    const margin = 10;
+    const rect = menu.getBoundingClientRect();
+    let left = clientX;
+    let top = clientY;
+
+    if (left + rect.width > window.innerWidth - margin) {
+      left = window.innerWidth - rect.width - margin;
+    }
+    if (top + rect.height > window.innerHeight - margin) {
+      top = window.innerHeight - rect.height - margin;
+    }
+
+    menu.style.left = Math.max(margin, left) + 'px';
+    menu.style.top = Math.max(margin, top) + 'px';
+  }
+
+  function openMenu(product, clientX, clientY) {
+    if (!product) return;
+
+    activeProduct = product;
+    const status = statuses.get(product.id) || 'Статус не загружен';
+    const ownToken = getSavedToken(product.id);
+    const isBooked = status === 'Забронировано';
+    const canCancel = isBooked && !!ownToken;
+
+    menuHeading.textContent = product.name;
+    menuStatus.textContent = isBooked ? 'Уже забронировано' : status;
+
+    openButton.hidden = false;
+    bookButton.hidden = isBooked;
+    cancelButton.hidden = !canCancel;
+
+    bookButton.disabled = false;
+    cancelButton.disabled = false;
+
+    placeMenu(clientX, clientY);
+  }
+
+  async function bookActiveProduct() {
+    if (!activeProduct) return;
+    const product = activeProduct;
+    bookButton.disabled = true;
+    bookButton.textContent = 'Бронируем…';
+
+    try {
+      const result = await jsonp({ action: 'book', id: product.id });
+
+      if (!result || !result.success) {
+        await refreshStatuses();
+        menuStatus.textContent = result && result.error
+          ? result.error
+          : 'Не удалось забронировать подарок.';
+        bookButton.hidden = true;
+        return;
+      }
+
+      saveToken(product.id, result.token);
+      await refreshStatuses();
+      menuStatus.textContent = 'Подарок забронирован. Вы сможете отменить бронь с этого устройства.';
+      bookButton.hidden = true;
+      cancelButton.hidden = false;
+      cancelButton.disabled = false;
+    } catch (error) {
+      menuStatus.textContent = error.message;
+    } finally {
+      bookButton.disabled = false;
+      bookButton.textContent = 'Забронировать';
+    }
+  }
+
+  async function cancelActiveBooking() {
+    if (!activeProduct) return;
+    const product = activeProduct;
+    const token = getSavedToken(product.id);
+
+    if (!token) {
+      menuStatus.textContent = 'На этом устройстве не найден ключ вашей брони.';
+      return;
+    }
+
+    cancelButton.disabled = true;
+    cancelButton.textContent = 'Отменяем…';
+
+    try {
+      const result = await jsonp({
+        action: 'cancel',
+        id: product.id,
+        token: token
+      });
+
+      if (!result || !result.success) {
+        menuStatus.textContent = result && result.error
+          ? result.error
+          : 'Не удалось отменить бронь.';
+        return;
+      }
+
+      removeToken(product.id);
+      await refreshStatuses();
+      menuStatus.textContent = 'Бронь отменена. Подарок снова свободен.';
+      cancelButton.hidden = true;
+      bookButton.hidden = false;
+    } catch (error) {
+      menuStatus.textContent = error.message;
+    } finally {
+      cancelButton.disabled = false;
+      cancelButton.textContent = 'Отменить мою бронь';
+    }
+  }
+
+  openButton.addEventListener('click', () => {
+    if (!activeProduct) return;
+    window.open(activeProduct.href, '_blank', 'noopener,noreferrer');
+    closeMenu();
+  });
+
+  bookButton.addEventListener('click', bookActiveProduct);
+  cancelButton.addEventListener('click', cancelActiveBooking);
+
+  document.addEventListener('pointerdown', event => {
+    if (!menu.contains(event.target)) closeMenu();
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  window.addEventListener('resize', closeMenu);
+  window.addEventListener('scroll', closeMenu, true);
+
+  // Подготовка прозрачности PNG для определения верхнего видимого подарка.
   try {
-    for (const img of products) {
+    for (const img of productElements) {
       if (!img.complete || !img.naturalWidth) {
         await new Promise((resolve, reject) => {
           img.onload = resolve;
@@ -451,14 +761,10 @@
 
       canvas.width = width;
       canvas.height = height;
-
       context.clearRect(0, 0, width, height);
       context.drawImage(img, 0, 0, width, height);
 
-      const imageData = context.getImageData(
-        0, 0, width, height
-      );
-
+      const imageData = context.getImageData(0, 0, width, height);
       const alpha = new Uint8Array(width * height);
 
       for (let i = 0; i < alpha.length; i++) {
@@ -470,53 +776,96 @@
         width,
         height,
         alpha,
+        id: img.dataset.id,
         href: img.dataset.link,
         name: img.dataset.name,
         zIndex: Number(getComputedStyle(img).zIndex)
       });
     }
 
-    preparedProducts.sort(
-      (a, b) => b.zIndex - a.zIndex
-    );
-
+    preparedProducts.sort((a, b) => b.zIndex - a.zIndex);
     wishlist.dataset.ready = 'true';
 
+    await refreshStatuses();
+    wishlist.dataset.statusReady = 'true';
+
   } catch (error) {
-    console.error('Ошибка подготовки изображений:', error);
+    console.error('Ошибка подготовки вишлиста:', error);
     wishlist.dataset.ready = 'error';
+    menuHeading.textContent = 'Не удалось загрузить подарки';
+    menuStatus.textContent = error.message;
     return;
   }
 
-  wishlist.addEventListener('pointermove', function (event) {
-    const product = getProductAt(
-      event.clientX,
-      event.clientY
-    );
-
-    showHighlight(product);
+  // Подсветка подарков при наведении мыши.
+  wishlist.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch') return;
+    showHighlight(getProductAt(event.clientX, event.clientY));
   });
 
-  wishlist.addEventListener('pointerleave', function () {
-    showHighlight(null);
-  });
+  wishlist.addEventListener('pointerleave', () => showHighlight(null));
 
-  wishlist.addEventListener('click', function (event) {
-    if (wishlist.dataset.ready !== 'true') return;
+  // Обычный левый клик открывает карточку товара.
+  wishlist.addEventListener('click', event => {
+    if (longPressTriggered) {
+      longPressTriggered = false;
+      event.preventDefault();
+      return;
+    }
 
-    const product = getProductAt(
-      event.clientX,
-      event.clientY
-    );
+    if (event.button !== 0) return;
 
+    const product = getProductAt(event.clientX, event.clientY);
     if (product) {
-      window.open(
-        product.href,
-        '_blank',
-        'noopener,noreferrer'
-      );
+      window.open(product.href, '_blank', 'noopener,noreferrer');
     }
   });
+
+  // Правая кнопка мыши открывает контекстное меню.
+  wishlist.addEventListener('contextmenu', event => {
+    const product = getProductAt(event.clientX, event.clientY);
+    if (!product) return;
+
+    event.preventDefault();
+    openMenu(product, event.clientX, event.clientY);
+  });
+
+  // Долгое нажатие на телефоне открывает то же меню.
+  wishlist.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch') return;
+
+    pointerStart = { x: event.clientX, y: event.clientY };
+    longPressTriggered = false;
+
+    clearTimeout(longPressTimer);
+    longPressTimer = setTimeout(() => {
+      const product = getProductAt(event.clientX, event.clientY);
+      if (product) {
+        longPressTriggered = true;
+        openMenu(product, event.clientX, event.clientY);
+      }
+    }, LONG_PRESS_MS);
+  });
+
+  wishlist.addEventListener('pointermove', event => {
+    if (!pointerStart || event.pointerType !== 'touch') return;
+
+    const dx = event.clientX - pointerStart.x;
+    const dy = event.clientY - pointerStart.y;
+
+    if (Math.hypot(dx, dy) > 12) {
+      clearTimeout(longPressTimer);
+    }
+  });
+
+  function clearLongPress() {
+    clearTimeout(longPressTimer);
+    pointerStart = null;
+  }
+
+  wishlist.addEventListener('pointerup', clearLongPress);
+  wishlist.addEventListener('pointercancel', clearLongPress);
+  wishlist.addEventListener('pointerleave', clearLongPress);
 
 })();
 </script>
