@@ -737,6 +737,25 @@
     if (!menu.contains(event.target)) closeMenu();
   });
 
+  // Закрываем меню, если курсор вышел и за его пределы, и за контур выбранного товара.
+  document.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch' || !menu.classList.contains('open') || !activeProduct) {
+      return;
+    }
+
+    const menuRect = menu.getBoundingClientRect();
+    const cursorInsideMenu =
+      event.clientX >= menuRect.left &&
+      event.clientX <= menuRect.right &&
+      event.clientY >= menuRect.top &&
+      event.clientY <= menuRect.bottom;
+
+    if (cursorInsideMenu) return;
+
+    const hoveredProduct = getProductAt(event.clientX, event.clientY);
+    if (hoveredProduct !== activeProduct) closeMenu();
+  });
+
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') closeMenu();
   });
