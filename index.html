@@ -172,8 +172,18 @@
 
   .welcome-text {
     margin: 0 0 24px;
-    font-size: 16px;
-    line-height: 1.65;
+    color: #bb403b;
+    font-family: "Ink Free", sans-serif;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  .welcome-text p {
+    margin: 0 0 16px;
+  }
+
+  .welcome-text p:last-child {
+    margin-bottom: 0;
   }
 
   .welcome-button {
@@ -183,8 +193,8 @@
     border: 0;
     border-radius: 999px;
     background: #b84d45;
-    color: #fffaf2;
-    font: 600 14px/1.2 system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #fbf4ec;
+    font: 18px/1.2 "Ink Free", sans-serif;
     cursor: pointer;
     transition: background .18s ease, transform .18s ease;
   }
@@ -213,7 +223,7 @@
     }
 
     .welcome-text {
-      font-size: 15px;
+      font-size: 17px;
     }
   }
 
@@ -510,9 +520,11 @@
            role="dialog"
            aria-modal="true"
            aria-labelledby="welcomeText">
-    <p class="welcome-text" id="welcomeText">Можешь выбрать что-то из этого списка хотелок, придумать своё или просто восхититься красотой, которую я тут натворила, и ничего не дарить!
-
-Если выбрал вариант из списка, не забудь забронировать хотелку через правую кнопку мыши, чтобы не возникло путаницы. Бронь также можно отменить в любой момент.</p>
+    <div class="welcome-text" id="welcomeText">
+      <p>Привет!</p>
+      <p>Можешь выбрать что-то из этого списка хотелок, придумать свое или просто восхититься красотой, которую я тут натворила.</p>
+      <p>Если выбрал вариант из списка, не забудь сделать бронь через правую кнопку мыши, чтобы не возникло путаницы. Бронь можно отменить в любой момент.</p>
+    </div>
     <button class="welcome-button" id="welcomeCloseButton" type="button">иду восхищаться</button>
   </section>
 </div>
