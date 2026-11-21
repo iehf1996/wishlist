@@ -699,7 +699,7 @@
   <div class="gift-menu__heading" id="giftMenuHeading"></div>
   <div class="gift-menu__status" id="giftMenuStatus"></div>
   <div class="gift-menu__separator"></div>
-  <button class="gift-menu__button" id="giftOpenButton" type="button">Открыть товар</button>
+  <button class="gift-menu__button" id="giftOpenButton" type="button">Посмотреть хотелку</button>
   <button class="gift-menu__button" id="giftBookButton" type="button">Забронировать</button>
   <button class="gift-menu__button" id="giftCancelButton" type="button" hidden>Отменить мою бронь</button>
 </div>
@@ -970,17 +970,19 @@
 
     activeProduct = product;
 
-    const status = statuses.get(product.id) || 'Статус не загружен';
-    const ownToken = getSavedToken(product.id);
-    const isBooked = status === 'Забронировано';
-    const canCancel = isBooked && !!ownToken;
+const status = statuses.get(product.id) || 'Статус не загружен';
+const ownToken = getSavedToken(product.id);
+const isBooked = status === 'Забронировано';
+const canCancel = isBooked && !!ownToken;
 
-    menuHeading.textContent = product.name;
-    menuStatus.textContent = isBooked ? 'Уже забронировано' : status;
+menuHeading.textContent = product.name;
+menuStatus.textContent = isBooked
+  ? (canCancel ? 'Вы забронировали этот подарок' : 'Уже забронировано')
+  : status;
 
-    openButton.hidden = false;
-    bookButton.hidden = isBooked;
-    cancelButton.hidden = !canCancel;
+openButton.hidden = false;
+bookButton.hidden = isBooked;
+cancelButton.hidden = !canCancel;
 
     bookButton.disabled = false;
     cancelButton.disabled = false;
@@ -1204,21 +1206,32 @@
   });
 
   // Левый клик открывает товар
-  wishlist.addEventListener('click', event => {
-    if (longPressTriggered) {
-      longPressTriggered = false;
-      event.preventDefault();
-      return;
+// Клик на телефоне открывает меню, на компьютере — ссылку
+wishlist.addEventListener('click', event => {
+  if (longPressTriggered) {
+    longPressTriggered = false;
+    event.preventDefault();
+    return;
+  }
+
+  if (event.button !== 0) return;
+
+  const product = getProductAt(event.clientX, event.clientY);
+
+  if (!product) return;
+
+  if (mobileQuery.matches) {
+    event.preventDefault();
+
+    showHighlight(product);
+
+    if (!product.noReserve) {
+      openMenu(product, event.clientX, event.clientY);
     }
-
-    if (event.button !== 0) return;
-
-    const product = getProductAt(event.clientX, event.clientY);
-
-    if (product) {
-      window.open(product.href, '_blank', 'noopener,noreferrer');
-    }
-  });
+  } else {
+    window.open(product.href, '_blank', 'noopener,noreferrer');
+  }
+});
 
   // Правая кнопка мыши открывает меню
   wishlist.addEventListener('contextmenu', event => {
@@ -1233,55 +1246,6 @@
     openMenu(product, event.clientX, event.clientY);
   });
 
-  // Долгое нажатие на телефоне открывает меню
-  // Долгое нажатие на телефоне подсвечивает товар и открывает меню
-wishlist.addEventListener('pointerdown', event => {
-  if (event.pointerType !== 'touch') return;
-
-  pointerStart = {
-    x: event.clientX,
-    y: event.clientY
-  };
-
-  longPressTriggered = false;
-
-  clearTimeout(longPressTimer);
-
-  longPressTimer = setTimeout(() => {
-    const product = getProductAt(event.clientX, event.clientY);
-
-    if (product) {
-      longPressTriggered = true;
-
-      // Подсвечиваем выбранный товар
-      showHighlight(product);
-
-      // Открываем меню, если товар можно забронировать
-      if (!product.noReserve) {
-        openMenu(product, event.clientX, event.clientY);
-      }
-    }
-  }, LONG_PRESS_MS);
-});
-
-wishlist.addEventListener('pointermove', event => {
-  if (!pointerStart || event.pointerType !== 'touch') return;
-
-  const dx = event.clientX - pointerStart.x;
-  const dy = event.clientY - pointerStart.y;
-
-  if (Math.hypot(dx, dy) > 12) {
-    clearTimeout(longPressTimer);
-  }
-});
-
-function clearLongPress() {
-  clearTimeout(longPressTimer);
-  pointerStart = null;
-}
-
-wishlist.addEventListener('pointerup', clearLongPress);
-wishlist.addEventListener('pointercancel', clearLongPress);
 
   // Обновление статусов бронирования
   refreshStatuses()
