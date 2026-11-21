@@ -164,6 +164,26 @@
     background: rgba(92, 63, 48, .14);
   }
 
+ @media (max-width: 768px) {
+  .gift-menu {
+    left: 12px !important;
+    right: 12px !important;
+    top: auto !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    padding: 10px;
+  }
+
+  .gift-menu__button {
+    padding: 14px 12px;
+  }
+}
+
 
   /* Приветственное окно */
   .welcome-overlay {
@@ -970,8 +990,19 @@
     activeProduct = null;
   }
 
-  function placeMenu(clientX, clientY) {
+function placeMenu(clientX, clientY) {
     menu.classList.add('open');
+
+    if (mobileQuery.matches) {
+      menu.style.left = '';
+      menu.style.top = '';
+      menu.style.right = '';
+      menu.style.bottom = '';
+      return;
+    }
+
+    menu.style.right = '';
+    menu.style.bottom = '';
 
     const margin = 10;
     const rect = menu.getBoundingClientRect();
@@ -989,7 +1020,7 @@
 
     menu.style.left = Math.max(margin, left) + 'px';
     menu.style.top = Math.max(margin, top) + 'px';
-  }
+}
 
   function openMenu(product, clientX, clientY) {
     if (!product) return;
