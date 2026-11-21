@@ -758,13 +758,15 @@
         img.dataset.desktopSrc = img.getAttribute('src');
       }
 
-      const desktopSrc = img.dataset.desktopSrc;
+const desktopSrc = img.dataset.desktopSrc;
 
-      img.src = mobileQuery.matches
-        ? desktopSrc.replace('assets/', 'assets/mobile/')
-        : desktopSrc;
-    });
-  }
+img.onerror = () => {
+  console.error('Не загрузилось изображение:', img.src);
+};
+
+img.src = mobileQuery.matches
+  ? desktopSrc.replace('assets/', 'assets/mobile/')
+  : desktopSrc;
 
   updateImages();
   mobileQuery.addEventListener('change', updateImages);
