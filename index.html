@@ -764,6 +764,10 @@ img.onerror = () => {
   console.error('Не загрузилось изображение:', img.src);
 };
 
+img.onerror = () => {
+  alert('Не удалось загрузить файл:\n' + img.src);
+};
+
 img.src = mobileQuery.matches
   ? desktopSrc.replace('assets/', 'assets/mobile/')
   : desktopSrc;
