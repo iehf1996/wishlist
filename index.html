@@ -1030,30 +1030,33 @@
   });
 
   // Правая кнопка мыши открывает контекстное меню.
-  wishlist.addEventListener('contextmenu', event => {
-    const product = getProductAt(event.clientX, event.clientY);
-    if (!product) return;
+wishlist.addEventListener('contextmenu', event => {
+  const product = getProductAt(event.clientX, event.clientY);
+  if (!product) return;
 
-    event.preventDefault();
-    openMenu(product, event.clientX, event.clientY);
-  });
+  event.preventDefault();
+
+  if (product.noReserve) return;
+
+  openMenu(product, event.clientX, event.clientY);
+});
 
   // Долгое нажатие на телефоне открывает то же меню.
-  wishlist.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'touch') return;
+wishlist.addEventListener('pointerdown', event => {
+  if (event.pointerType !== 'touch') return;
 
-    pointerStart = { x: event.clientX, y: event.clientY };
-    longPressTriggered = false;
+  pointerStart = { x: event.clientX, y: event.clientY };
+  longPressTriggered = false;
 
-    clearTimeout(longPressTimer);
-    longPressTimer = setTimeout(() => {
-      const product = getProductAt(event.clientX, event.clientY);
-      if (product) {
-        longPressTriggered = true;
-        openMenu(product, event.clientX, event.clientY);
-      }
-    }, LONG_PRESS_MS);
-  });
+  clearTimeout(longPressTimer);
+  longPressTimer = setTimeout(() => {
+    const product = getProductAt(event.clientX, event.clientY);
+    if (product && !product.noReserve) {
+      longPressTriggered = true;
+      openMenu(product, event.clientX, event.clientY);
+    }
+  }, LONG_PRESS_MS);
+});
 
   wishlist.addEventListener('pointermove', event => {
     if (!pointerStart || event.pointerType !== 'touch') return;
