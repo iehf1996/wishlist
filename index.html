@@ -1204,21 +1204,25 @@
   });
 
   // Левый клик открывает товар
-  wishlist.addEventListener('click', event => {
-    if (longPressTriggered) {
-      longPressTriggered = false;
-      event.preventDefault();
-      return;
+wishlist.addEventListener('click', event => {
+  if (longPressTriggered) {
+    longPressTriggered = false;
+    event.preventDefault();
+    return;
+  }
+
+  if (event.button !== 0) return;
+
+  const product = getProductAt(event.clientX, event.clientY);
+
+  if (product) {
+    if (mobileQuery.matches) {
+      showHighlight(product);
     }
 
-    if (event.button !== 0) return;
-
-    const product = getProductAt(event.clientX, event.clientY);
-
-    if (product) {
-      window.open(product.href, '_blank', 'noopener,noreferrer');
-    }
-  });
+    window.open(product.href, '_blank', 'noopener,noreferrer');
+  }
+});
 
   // Правая кнопка мыши открывает меню
   wishlist.addEventListener('contextmenu', event => {
