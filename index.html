@@ -8,6 +8,16 @@
 <title>Мои хотелки</title>
 
 <style>
+
+ @font-face {
+  font-family: 'Ink Free';
+  src: url('fonts/ink-free.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+ 
   * {
     box-sizing: border-box;
   }
@@ -21,9 +31,23 @@
   }
 
 .wishlist {
+  position: relative;
   width: 100vw;
   aspect-ratio: 3500 / 3063;
   overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.product {
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -43,10 +67,6 @@
     flex-shrink: 0;
   }
 }
-
-  .product {
-    cursor: pointer;
-  }
 
   /* Выбранное изображение поверх остальных */
   .highlight-product {
@@ -268,14 +288,6 @@
   }
 
 </style>
-
- @font-face {
-  font-family: 'Ink Free';
-  src: url('fonts/ink-free.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
  
 </head>
 
@@ -715,7 +727,7 @@
   <a href="https://www.ozon.ru/product/derevyannye-shtampy-russkiy-i-latinskiy-alfavit-bukvy-i-tsifry-derevyannyy-keys-3591251164/?at=1pSo1T31MvfMHg8tvqRkmudz7v63EUOX&sh=USWH6pQGVA" target="_blank" rel="noopener noreferrer">Штампы</a>
   <a href="https://www.ozon.ru/product/shtampy-russkiy-alfavit-bukvy-i-tsifry-2125206946/?at=1pSo1TlSMJ0du17N2goLnvsN-LJGx_Lf&sh=USWH6s-h9wA" target="_blank" rel="noopener noreferrer">Штампы вар 1</a>
   
-  <a href="https://www.ozon.ru/product/nabor-dlya-rukodeliya-knopki-dlya-odezhdy-plastikovye-t5-150-shtuk-ustanovshchik-knopok-konteyner-853086466/?at=1pSo1MS4DqKq-rUJpLGM4EaWT7_00Zj8&is_apparel_size_selected=true&sh=USWH6uqtCQ" rel="noopener noreferrer">набор крепления кнопок</a>
+  <a href="https://www.ozon.ru/product/nabor-dlya-rukodeliya-knopki-dlya-odezhdy-plastikovye-t5-150-shtuk-ustanovshchik-knopok-konteyner-853086466/?at=1pSo1MS4DqKq-rUJpLGM4EaWT7_00Zj8&is_apparel_size_selected=true&sh=USWH6uqtCQ" target="_blank" rel="noopener noreferrer">набор крепления кнопок</a>
   <a href="https://www.ozon.ru/product/vlazhnaya-palitra-dlya-akrilovyh-krasok-mokraya-palitra-4320266643/?at=1oCr1_h0Wk89No-WdTcegp4FOn3vwCYJ&is_apparel_size_selected=true&sh=USWH6huLVw" target="_blank" rel="noopener noreferrer">влажная палитра</a>
   <a href="https://www.ozon.ru/product/trimmer-elektricheskiy-dlya-brovey-i-litsa-s-led-podsvetkoy-portativnyy-rozovyy-zoloto-4368661820/?at=1oCr1-kImaawVy3iz2V_WJ7eZ14AtOXd&is_apparel_size_selected=true&sh=USWH6mCLeQ" target="_blank" rel="noopener noreferrer">триммер</a>
   <a href="https://www.ozon.ru/product/nakleyki-srednevekovye-koty-nabor-dekorativnyh-nakleek-3107974138/?at=1oCr1M-B2KwHFpGVLV979KNojARfSjvV&is_apparel_size_selected=true&sh=USWH6v2POA" rel="noopener noreferrer">наклейки</a>
@@ -737,17 +749,25 @@
   const API_URL = 'https://script.google.com/macros/s/AKfycbxaUn9FpMI62ue26tnh6SUO9Nv3q45aZC-rbo86lQGNnciX02pcYojMT0k96bZnUC2v2g/exec';
 
    // Выбираем изображения для мобильной или компьютерной версии
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    // Переключение изображений между ПК и мобильной версией
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
 
-  if (isMobile) {
+  function updateImages() {
     document.querySelectorAll('#wishlist img.layer').forEach(img => {
-      const desktopSrc = img.getAttribute('src');
-
-      if (desktopSrc && desktopSrc.startsWith('assets/')) {
-        img.src = desktopSrc.replace('assets/', 'assets/mobile/');
+      if (!img.dataset.desktopSrc) {
+        img.dataset.desktopSrc = img.getAttribute('src');
       }
+
+      const desktopSrc = img.dataset.desktopSrc;
+
+      img.src = mobileQuery.matches
+        ? desktopSrc.replace('assets/', 'assets/mobile/')
+        : desktopSrc;
     });
   }
+
+  updateImages();
+  mobileQuery.addEventListener('change', updateImages);
 
   const wishlist = document.getElementById('wishlist');
   const highlightProduct = document.getElementById('highlightProduct');
