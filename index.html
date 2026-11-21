@@ -121,13 +121,14 @@
   .gift-menu.open { display: block; }
 
   .gift-menu__heading {
-    padding: 8px 10px 7px;
-    color: #bb403b;
-    font-size: 16px;
-    line-height: 1.35;
-    overflow-wrap: anywhere;
-  }
-
+  padding: 8px 10px 7px;
+  margin-top: 4px;
+  color: #bb403b;
+  font-size: 16px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+ 
   .gift-menu__button {
     display: block;
     width: 100%;
@@ -152,12 +153,21 @@
     cursor: wait;
   }
 
-  .gift-menu__status {
-    padding: 8px 10px 5px;
-    color: #80675a;
-    font-size: 12px;
-  }
-
+.gift-menu__status {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2px auto 8px;
+  padding: 5px 12px;
+  border: 1px solid #80675a;
+  border-radius: 999px;
+  color: #80675a;
+  background: transparent;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.35;
+}
+ 
   .gift-menu__separator {
     height: 1px;
     margin: 5px 4px;
@@ -741,14 +751,13 @@
 
 
 <div class="gift-menu" id="giftMenu" role="menu" aria-label="Действия с подарком">
-  <div class="gift-menu__heading" id="giftMenuHeading"></div>
   <div class="gift-menu__status" id="giftMenuStatus"></div>
+  <div class="gift-menu__heading" id="giftMenuHeading"></div>
   <div class="gift-menu__separator"></div>
   <button class="gift-menu__button" id="giftOpenButton" type="button">Посмотреть хотелку</button>
   <button class="gift-menu__button" id="giftBookButton" type="button">Забронировать</button>
   <button class="gift-menu__button" id="giftCancelButton" type="button" hidden>Отменить мою бронь</button>
 </div>
-
 
 <nav class="accessible-links" aria-label="Товары в вишлисте">
   <a href="https://www.ozon.ru/product/kartochnaya-igra-dlya-progulok-vokrug-da-okolo-pravda-severa-3626548081/?at=1mWr1RH39jMFJL0p1NZ95tWBgO-u2MGO&sh=USWH6oTE1A" target="_blank" rel="noopener noreferrer">Вокруг да около</a>
