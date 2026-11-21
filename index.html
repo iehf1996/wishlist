@@ -831,7 +831,6 @@
   const wishlist = document.getElementById('wishlist');
   const highlightProduct = document.getElementById('highlightProduct');
   const menu = document.getElementById('giftMenu');
-  const menuHeading = document.getElementById('giftMenuHeading');
   const menuStatus = document.getElementById('giftMenuStatus');
   const openButton = document.getElementById('giftOpenButton');
   const bookButton = document.getElementById('giftBookButton');
@@ -1040,7 +1039,6 @@ const ownToken = getSavedToken(product.id);
 const isBooked = status === 'Забронировано';
 const canCancel = isBooked && !!ownToken;
 
-menuHeading.textContent = product.name;
 menuStatus.textContent = isBooked
   ? (canCancel ? 'Вы забронировали этот подарок' : 'Уже забронировано')
   : status;
@@ -1252,7 +1250,6 @@ cancelButton.hidden = !canCancel;
     console.error('Ошибка подготовки вишлиста:', error);
 
     wishlist.dataset.ready = 'error';
-    menuHeading.textContent = 'Не удалось загрузить подарки';
     menuStatus.textContent = error.message;
 
     alert('Ошибка подготовки вишлиста:\n' + error.message);
