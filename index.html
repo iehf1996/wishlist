@@ -27,21 +27,22 @@
 }
 
 @media (max-width: 768px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   .wishlist {
+    position: relative;
+    width: 100%;
+    height: auto;
     aspect-ratio: 1440 / 7325;
+    overflow: hidden;
+    flex-shrink: 0;
   }
 }
-
-  .layer {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    pointer-events: none;
-    user-select: none;
-  }
 
   .product {
     cursor: pointer;
