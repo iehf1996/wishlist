@@ -348,6 +348,13 @@ html, body {
     display: block;
   }
 }
+
+body:not(.font-loaded) .welcome-text,
+body:not(.font-loaded) .welcome-button,
+body:not(.font-loaded) .gift-menu {
+  visibility: hidden;
+  
+}
 </style>
 </head>
 
@@ -767,6 +774,12 @@ html, body {
 
 <script>
 (async function () {
+    // Показываем текст только после загрузки шрифта
+  document.fonts.load('16px "Ink Free"').then(() => {
+    document.body.classList.add('font-loaded');
+  }).catch(error => {
+    console.error('Не удалось загрузить шрифт:', error);
+  });
   const API_URL = 'https://script.google.com/macros/s/AKfycbxaUn9FpMI62ue26tnh6SUO9Nv3q45aZC-rbo86lQGNnciX02pcYojMT0k96bZnUC2v2g/exec';
 
   // Переключение изображений между ПК и мобильной версией
