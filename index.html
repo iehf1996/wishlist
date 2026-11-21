@@ -1204,6 +1204,7 @@
   });
 
   // Левый клик открывает товар
+// Клик на телефоне открывает меню, на компьютере — ссылку
 wishlist.addEventListener('click', event => {
   if (longPressTriggered) {
     longPressTriggered = false;
@@ -1215,11 +1216,17 @@ wishlist.addEventListener('click', event => {
 
   const product = getProductAt(event.clientX, event.clientY);
 
-  if (product) {
-    if (mobileQuery.matches) {
-      showHighlight(product);
-    }
+  if (!product) return;
 
+  if (mobileQuery.matches) {
+    event.preventDefault();
+
+    showHighlight(product);
+
+    if (!product.noReserve) {
+      openMenu(product, event.clientX, event.clientY);
+    }
+  } else {
     window.open(product.href, '_blank', 'noopener,noreferrer');
   }
 });
@@ -1237,55 +1244,6 @@ wishlist.addEventListener('click', event => {
     openMenu(product, event.clientX, event.clientY);
   });
 
-  // Долгое нажатие на телефоне открывает меню
-  // Долгое нажатие на телефоне подсвечивает товар и открывает меню
-wishlist.addEventListener('pointerdown', event => {
-  if (event.pointerType !== 'touch') return;
-
-  pointerStart = {
-    x: event.clientX,
-    y: event.clientY
-  };
-
-  longPressTriggered = false;
-
-  clearTimeout(longPressTimer);
-
-  longPressTimer = setTimeout(() => {
-    const product = getProductAt(event.clientX, event.clientY);
-
-    if (product) {
-      longPressTriggered = true;
-
-      // Подсвечиваем выбранный товар
-      showHighlight(product);
-
-      // Открываем меню, если товар можно забронировать
-      if (!product.noReserve) {
-        openMenu(product, event.clientX, event.clientY);
-      }
-    }
-  }, LONG_PRESS_MS);
-});
-
-wishlist.addEventListener('pointermove', event => {
-  if (!pointerStart || event.pointerType !== 'touch') return;
-
-  const dx = event.clientX - pointerStart.x;
-  const dy = event.clientY - pointerStart.y;
-
-  if (Math.hypot(dx, dy) > 12) {
-    clearTimeout(longPressTimer);
-  }
-});
-
-function clearLongPress() {
-  clearTimeout(longPressTimer);
-  pointerStart = null;
-}
-
-wishlist.addEventListener('pointerup', clearLongPress);
-wishlist.addEventListener('pointercancel', clearLongPress);
 
   // Обновление статусов бронирования
   refreshStatuses()
