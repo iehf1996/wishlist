@@ -216,22 +216,7 @@
     outline-offset: 3px;
   }
 
-  @media (max-width: 480px) {
-    .welcome-overlay {
-      padding: 14px;
-    }
-
-    .welcome-window {
-      padding: 24px 20px;
-      border-radius: 15px;
-    }
-
-    .welcome-text {
-      font-size: 17px;
-    }
-  }
-
-   @media (max-width: 768px) {
+  @media (max-width: 768px) {
     .welcome-window {
       width: 100%;
       padding: 32px 24px;
@@ -248,6 +233,37 @@
 
     .welcome-button:focus-visible {
       outline: none;
+    }
+
+    html, body {
+      height: auto;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .wishlist {
+      position: relative;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1440 / 7325;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .welcome-overlay {
+      padding: 14px;
+    }
+
+    .welcome-window {
+      padding: 24px 20px;
+      border-radius: 15px;
+    }
+
+    .welcome-text {
+      font-size: 17px;
     }
   }
 
