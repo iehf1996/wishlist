@@ -744,12 +744,12 @@
 </nav>
 
 
+
 <script>
 (async function () {
   const API_URL = 'https://script.google.com/macros/s/AKfycbxaUn9FpMI62ue26tnh6SUO9Nv3q45aZC-rbo86lQGNnciX02pcYojMT0k96bZnUC2v2g/exec';
 
-   // Выбираем изображения для мобильной или компьютерной версии
-    // Переключение изображений между ПК и мобильной версией
+  // Переключение изображений между ПК и мобильной версией
   const mobileQuery = window.matchMedia('(max-width: 768px)');
 
   function updateImages() {
@@ -758,19 +758,18 @@
         img.dataset.desktopSrc = img.getAttribute('src');
       }
 
-const desktopSrc = img.dataset.desktopSrc;
+      const desktopSrc = img.dataset.desktopSrc;
 
-img.onerror = () => {
-  console.error('Не загрузилось изображение:', img.src);
-};
+      img.onerror = () => {
+        console.error('Не загрузилось изображение:', img.src);
+        alert('Не удалось загрузить файл:\n' + img.src);
+      };
 
-img.onerror = () => {
-  alert('Не удалось загрузить файл:\n' + img.src);
-};
-
-img.src = mobileQuery.matches
-  ? desktopSrc.replace('assets/', 'assets/mobile/')
-  : desktopSrc;
+      img.src = mobileQuery.matches
+        ? desktopSrc.replace('assets/', 'assets/mobile/')
+        : desktopSrc;
+    });
+  }
 
   updateImages();
   mobileQuery.addEventListener('change', updateImages);
@@ -784,7 +783,7 @@ img.src = mobileQuery.matches
   const bookButton = document.getElementById('giftBookButton');
   const cancelButton = document.getElementById('giftCancelButton');
 
-  // Приветственное окно показывается при каждом открытии страницы.
+  // Приветственное окно
   const welcomeOverlay = document.getElementById('welcomeOverlay');
   const welcomeCloseButton = document.getElementById('welcomeCloseButton');
 
@@ -793,7 +792,6 @@ img.src = mobileQuery.matches
   welcomeCloseButton.addEventListener('click', () => {
     welcomeOverlay.hidden = true;
   });
-
 
   const productElements = Array.from(wishlist.querySelectorAll('.product'));
   const SCALE = 0.5;
@@ -874,53 +872,61 @@ img.src = mobileQuery.matches
 
   async function refreshStatuses() {
     const result = await jsonp({ action: 'list' });
+
     if (!result || !result.success || !Array.isArray(result.products)) {
-      throw new Error(result && result.error ? result.error : 'Не удалось получить список подарков.');
+      throw new Error(
+        result && result.error
+          ? result.error
+          : 'Не удалось получить список подарков.'
+      );
     }
 
     statuses.clear();
+
     result.products.forEach(product => {
       statuses.set(String(product.id), product.status || 'Свободно');
     });
   }
 
   function getProductAt(clientX, clientY) {
-  const rect = wishlist.getBoundingClientRect();
-  const x = clientX - rect.left;
-  const y = clientY - rect.top;
+    const rect = wishlist.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
-  if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+      return null;
+    }
 
-  const relativeX = x / rect.width;
-  const relativeY = y / rect.height;
+    const relativeX = x / rect.width;
+    const relativeY = y / rect.height;
 
-  for (const product of preparedProducts) {
-    const hitbox = product.hitbox || 0;
+    for (const product of preparedProducts) {
+      const hitbox = product.hitbox || 0;
 
-    const px = Math.floor(relativeX * product.width);
-    const py = Math.floor(relativeY * product.height);
+      const px = Math.floor(relativeX * product.width);
+      const py = Math.floor(relativeY * product.height);
 
-    const extraX = hitbox * product.width / rect.width;
-    const extraY = hitbox * product.height / rect.height;
+      const extraX = hitbox * product.width / rect.width;
+      const extraY = hitbox * product.height / rect.height;
 
-    const startX = Math.max(0, Math.floor(px - extraX));
-    const endX = Math.min(product.width - 1, Math.ceil(px + extraX));
-    const startY = Math.max(0, Math.floor(py - extraY));
-    const endY = Math.min(product.height - 1, Math.ceil(py + extraY));
+      const startX = Math.max(0, Math.floor(px - extraX));
+      const endX = Math.min(product.width - 1, Math.ceil(px + extraX));
+      const startY = Math.max(0, Math.floor(py - extraY));
+      const endY = Math.min(product.height - 1, Math.ceil(py + extraY));
 
-    for (let checkY = startY; checkY <= endY; checkY++) {
-      for (let checkX = startX; checkX <= endX; checkX++) {
-        const index = checkY * product.width + checkX;
+      for (let checkY = startY; checkY <= endY; checkY++) {
+        for (let checkX = startX; checkX <= endX; checkX++) {
+          const index = checkY * product.width + checkX;
 
-        if (product.alpha[index] > ALPHA_THRESHOLD) {
-          return product;
+          if (product.alpha[index] > ALPHA_THRESHOLD) {
+            return product;
+          }
         }
       }
     }
-  }
 
-  return null;
-}
+    return null;
+  }
 
   function showHighlight(product) {
     if (!product) {
@@ -943,12 +949,14 @@ img.src = mobileQuery.matches
 
     const margin = 10;
     const rect = menu.getBoundingClientRect();
+
     let left = clientX;
     let top = clientY;
 
     if (left + rect.width > window.innerWidth - margin) {
       left = window.innerWidth - rect.width - margin;
     }
+
     if (top + rect.height > window.innerHeight - margin) {
       top = window.innerHeight - rect.height - margin;
     }
@@ -961,6 +969,7 @@ img.src = mobileQuery.matches
     if (!product) return;
 
     activeProduct = product;
+
     const status = statuses.get(product.id) || 'Статус не загружен';
     const ownToken = getSavedToken(product.id);
     const isBooked = status === 'Забронировано';
@@ -981,30 +990,42 @@ img.src = mobileQuery.matches
 
   async function bookActiveProduct() {
     if (!activeProduct) return;
+
     const product = activeProduct;
+
     bookButton.disabled = true;
     bookButton.textContent = 'Бронируем…';
 
     try {
-      const result = await jsonp({ action: 'book', id: product.id });
+      const result = await jsonp({
+        action: 'book',
+        id: product.id
+      });
 
       if (!result || !result.success) {
         await refreshStatuses();
+
         menuStatus.textContent = result && result.error
           ? result.error
           : 'Не удалось забронировать подарок.';
+
         bookButton.hidden = true;
         return;
       }
 
       saveToken(product.id, result.token);
       await refreshStatuses();
-      menuStatus.textContent = 'Подарок забронирован. Вы сможете отменить бронь с этого устройства.';
+
+      menuStatus.textContent =
+        'Подарок забронирован. Вы сможете отменить бронь с этого устройства.';
+
       bookButton.hidden = true;
       cancelButton.hidden = false;
       cancelButton.disabled = false;
+
     } catch (error) {
       menuStatus.textContent = error.message;
+
     } finally {
       bookButton.disabled = false;
       bookButton.textContent = 'Забронировать';
@@ -1013,11 +1034,13 @@ img.src = mobileQuery.matches
 
   async function cancelActiveBooking() {
     if (!activeProduct) return;
+
     const product = activeProduct;
     const token = getSavedToken(product.id);
 
     if (!token) {
-      menuStatus.textContent = 'На этом устройстве не найден ключ вашей брони.';
+      menuStatus.textContent =
+        'На этом устройстве не найден ключ вашей брони.';
       return;
     }
 
@@ -1040,11 +1063,16 @@ img.src = mobileQuery.matches
 
       removeToken(product.id);
       await refreshStatuses();
-      menuStatus.textContent = 'Бронь отменена. Подарок снова свободен.';
+
+      menuStatus.textContent =
+        'Бронь отменена. Подарок снова свободен.';
+
       cancelButton.hidden = true;
       bookButton.hidden = false;
+
     } catch (error) {
       menuStatus.textContent = error.message;
+
     } finally {
       cancelButton.disabled = false;
       cancelButton.textContent = 'Отменить мою бронь';
@@ -1053,6 +1081,7 @@ img.src = mobileQuery.matches
 
   openButton.addEventListener('click', () => {
     if (!activeProduct) return;
+
     window.open(activeProduct.href, '_blank', 'noopener,noreferrer');
     closeMenu();
   });
@@ -1061,16 +1090,23 @@ img.src = mobileQuery.matches
   cancelButton.addEventListener('click', cancelActiveBooking);
 
   document.addEventListener('pointerdown', event => {
-    if (!menu.contains(event.target)) closeMenu();
+    if (!menu.contains(event.target)) {
+      closeMenu();
+    }
   });
 
-  // Закрываем меню, если курсор вышел и за его пределы, и за контур выбранного товара.
+  // Закрытие меню при уходе курсора с товара
   document.addEventListener('pointermove', event => {
-    if (event.pointerType === 'touch' || !menu.classList.contains('open') || !activeProduct) {
+    if (
+      event.pointerType === 'touch' ||
+      !menu.classList.contains('open') ||
+      !activeProduct
+    ) {
       return;
     }
 
     const menuRect = menu.getBoundingClientRect();
+
     const cursorInsideMenu =
       event.clientX >= menuRect.left &&
       event.clientX <= menuRect.right &&
@@ -1080,23 +1116,30 @@ img.src = mobileQuery.matches
     if (cursorInsideMenu) return;
 
     const hoveredProduct = getProductAt(event.clientX, event.clientY);
-    if (hoveredProduct !== activeProduct) closeMenu();
+
+    if (hoveredProduct !== activeProduct) {
+      closeMenu();
+    }
   });
 
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') closeMenu();
+    if (event.key === 'Escape') {
+      closeMenu();
+    }
   });
 
   window.addEventListener('resize', closeMenu);
   window.addEventListener('scroll', closeMenu, true);
 
-  // Подготовка прозрачности PNG для определения верхнего видимого подарка.
+  // Подготовка прозрачности PNG
   try {
     for (const img of productElements) {
       if (!img.complete || !img.naturalWidth) {
         await new Promise((resolve, reject) => {
           img.onload = resolve;
-          img.onerror = reject;
+          img.onerror = () => reject(
+            new Error('Не удалось загрузить изображение: ' + img.src)
+          );
         });
       }
 
@@ -1107,6 +1150,7 @@ img.src = mobileQuery.matches
 
       canvas.width = width;
       canvas.height = height;
+
       context.clearRect(0, 0, width, height);
       context.drawImage(img, 0, 0, width, height);
 
@@ -1132,25 +1176,34 @@ img.src = mobileQuery.matches
     }
 
     preparedProducts.sort((a, b) => b.zIndex - a.zIndex);
+
     wishlist.dataset.ready = 'true';
+
+    console.log('Вишлист готов. Товаров:', preparedProducts.length);
 
   } catch (error) {
     console.error('Ошибка подготовки вишлиста:', error);
+
     wishlist.dataset.ready = 'error';
     menuHeading.textContent = 'Не удалось загрузить подарки';
     menuStatus.textContent = error.message;
+
+    alert('Ошибка подготовки вишлиста:\n' + error.message);
     return;
   }
 
-  // Подсветка подарков при наведении мыши.
+  // Подсветка подарков при наведении мыши
   wishlist.addEventListener('pointermove', event => {
     if (event.pointerType === 'touch') return;
+
     showHighlight(getProductAt(event.clientX, event.clientY));
   });
 
-  wishlist.addEventListener('pointerleave', () => showHighlight(null));
+  wishlist.addEventListener('pointerleave', () => {
+    showHighlight(null);
+  });
 
-  // Обычный левый клик открывает карточку товара.
+  // Левый клик открывает товар
   wishlist.addEventListener('click', event => {
     if (longPressTriggered) {
       longPressTriggered = false;
@@ -1161,39 +1214,47 @@ img.src = mobileQuery.matches
     if (event.button !== 0) return;
 
     const product = getProductAt(event.clientX, event.clientY);
+
     if (product) {
       window.open(product.href, '_blank', 'noopener,noreferrer');
     }
   });
 
-  // Правая кнопка мыши открывает контекстное меню.
-wishlist.addEventListener('contextmenu', event => {
-  const product = getProductAt(event.clientX, event.clientY);
-  if (!product) return;
-
-  event.preventDefault();
-
-  if (product.noReserve) return;
-
-  openMenu(product, event.clientX, event.clientY);
-});
-
-  // Долгое нажатие на телефоне открывает то же меню.
-wishlist.addEventListener('pointerdown', event => {
-  if (event.pointerType !== 'touch') return;
-
-  pointerStart = { x: event.clientX, y: event.clientY };
-  longPressTriggered = false;
-
-  clearTimeout(longPressTimer);
-  longPressTimer = setTimeout(() => {
+  // Правая кнопка мыши открывает меню
+  wishlist.addEventListener('contextmenu', event => {
     const product = getProductAt(event.clientX, event.clientY);
-    if (product && !product.noReserve) {
-      longPressTriggered = true;
-      openMenu(product, event.clientX, event.clientY);
-    }
-  }, LONG_PRESS_MS);
-});
+
+    if (!product) return;
+
+    event.preventDefault();
+
+    if (product.noReserve) return;
+
+    openMenu(product, event.clientX, event.clientY);
+  });
+
+  // Долгое нажатие на телефоне открывает меню
+  wishlist.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch') return;
+
+    pointerStart = {
+      x: event.clientX,
+      y: event.clientY
+    };
+
+    longPressTriggered = false;
+
+    clearTimeout(longPressTimer);
+
+    longPressTimer = setTimeout(() => {
+      const product = getProductAt(event.clientX, event.clientY);
+
+      if (product && !product.noReserve) {
+        longPressTriggered = true;
+        openMenu(product, event.clientX, event.clientY);
+      }
+    }, LONG_PRESS_MS);
+  });
 
   wishlist.addEventListener('pointermove', event => {
     if (!pointerStart || event.pointerType !== 'touch') return;
@@ -1214,16 +1275,18 @@ wishlist.addEventListener('pointerdown', event => {
   wishlist.addEventListener('pointerup', clearLongPress);
   wishlist.addEventListener('pointercancel', clearLongPress);
 
-   refreshStatuses()
+  // Обновление статусов бронирования
+  refreshStatuses()
     .then(() => {
       wishlist.dataset.statusReady = 'true';
     })
     .catch(error => {
       console.error('Ошибка загрузки статусов:', error);
     });
- 
+
 })();
 </script>
+
 
 </body>
 </html>
