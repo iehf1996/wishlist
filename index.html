@@ -20,14 +20,17 @@
     overflow-x: hidden;
   }
 
+.wishlist {
+  width: 100vw;
+  aspect-ratio: 3500 / 3063;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
   .wishlist {
-    position: relative;
-    width: 100vw;
-    margin: 0;
-    aspect-ratio: 3500 / 3063;
-    overflow: hidden;
-    isolation: isolate;
+    aspect-ratio: 1440 / 7325;
   }
+}
 
   .layer {
     position: absolute;
