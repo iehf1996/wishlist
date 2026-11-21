@@ -227,6 +227,26 @@
     }
   }
 
+   @media (max-width: 768px) {
+    .welcome-window {
+      width: 100%;
+      padding: 32px 24px;
+    }
+
+    .welcome-text {
+      font-size: 22px;
+      line-height: 1.5;
+    }
+
+    .welcome-button {
+      font-size: 22px;
+    }
+
+    .welcome-button:focus-visible {
+      outline: none;
+    }
+  }
+
 </style>
 </head>
 
@@ -686,6 +706,19 @@
 <script>
 (async function () {
   const API_URL = 'https://script.google.com/macros/s/AKfycbxaUn9FpMI62ue26tnh6SUO9Nv3q45aZC-rbo86lQGNnciX02pcYojMT0k96bZnUC2v2g/exec';
+
+   // Выбираем изображения для мобильной или компьютерной версии
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  if (isMobile) {
+    document.querySelectorAll('#wishlist img.layer').forEach(img => {
+      const desktopSrc = img.getAttribute('src');
+
+      if (desktopSrc && desktopSrc.startsWith('assets/')) {
+        img.src = desktopSrc.replace('assets/', 'assets/mobile/');
+      }
+    });
+  }
 
   const wishlist = document.getElementById('wishlist');
   const highlightProduct = document.getElementById('highlightProduct');
