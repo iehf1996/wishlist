@@ -119,7 +119,7 @@ html, body {
 }
 
 .gift-menu__heading {
-  padding: 8px 10px 7px;
+  padding: 8px 8px 7px;
   margin-top: 4px;
   color: #bb403b;
   font-size: 12px;
@@ -709,14 +709,14 @@ body:not(.font-loaded) .gift-menu {
     <div class="welcome-text" id="welcomeText">
       <div class="welcome-text-desktop">
         <p>Привет!</p>
-        <p>Можешь выбрать что-то из этого списка хотелок, придумать свое или просто восхититься красотой, которую я тут натворила.</p>
-        <p>Если выбрал вариант из списка, не забудь сделать бронь через правую кнопку мыши, чтобы не возникло путаницы. Бронь можно отменить в любой момент.</p>
+        <p>Можешь выбрать что-то из этого списка хотелок, придумать свое или просто восхититься красотой, которую я тут натворила 🤎</p>
+        <p>Если выберешь вариант из списка, не забудь сделать бронь через правую кнопку мыши, чтобы не возникло путаницы. Бронь можно отменить в любой момент.</p>
       </div>
 
       <div class="welcome-text-mobile">
         <p>Привет!</p>
-        <p>Можешь выбрать что-то из этого списка хотелок, придумать свое или просто восхититься красотой, которую я тут натворила.</p>
-        <p>Если выбрал вариант из списка, не забудь сделать бронь, чтобы не возникло путаницы. Бронь можно отменить в любой момент.</p>
+        <p>Можешь выбрать что-то из этого списка хотелок, придумать свое или просто восхититься красотой, которую я тут натворила 🤎</p>
+        <p>Если выберешь вариант из списка, не забудь сделать бронь, чтобы не возникло путаницы. Бронь можно отменить в любой момент.</p>
       </div>
     </div>
 
@@ -1042,7 +1042,7 @@ body:not(.font-loaded) .gift-menu {
 
     if (isBooked) {
       setMenuStatus(
-        canCancel ? 'Вы забронировали этот подарок' : 'Уже забронировано',
+        canCancel ? 'твоя бронь' : 'уже забронировано',
         canCancel ? 'mine' : 'booked'
       );
     } else if (isFree) {
@@ -1067,7 +1067,7 @@ body:not(.font-loaded) .gift-menu {
     const product = activeProduct;
 
     bookButton.disabled = true;
-    bookButton.textContent = 'Бронируем…';
+    bookButton.textContent = 'бронируем…';
 
     try {
       const result = await jsonp({
@@ -1081,7 +1081,7 @@ body:not(.font-loaded) .gift-menu {
         setMenuStatus(
           result && result.error
             ? result.error
-            : 'Не удалось забронировать подарок.',
+            : 'не удалось забронировать',
           'error'
         );
 
@@ -1106,7 +1106,7 @@ body:not(.font-loaded) .gift-menu {
 
     } finally {
       bookButton.disabled = false;
-      bookButton.textContent = 'Забронировать';
+      bookButton.textContent = 'забронировать';
     }
   }
 
@@ -1138,7 +1138,7 @@ body:not(.font-loaded) .gift-menu {
         setMenuStatus(
           result && result.error
             ? result.error
-            : 'Не удалось отменить бронь.',
+            : 'упс, не удалось отменить бронь',
           'error'
         );
         return;
