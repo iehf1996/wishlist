@@ -774,9 +774,13 @@ body:not(.font-loaded) .gift-menu {
 
 <script>
 (async function () {
-    // Показываем текст только после загрузки шрифта
-  document.fonts.load('16px "Ink Free"').then(() => {
-    document.body.classList.add('font-loaded');
+     // Показываем текст только после загрузки шрифта
+  document.fonts.load('16px "Ink Free"').then(loadedFonts => {
+    if (loadedFonts.length > 0 && document.fonts.check('16px "Ink Free"')) {
+      document.body.classList.add('font-loaded');
+    } else {
+      console.error('Шрифт Ink Free не загрузился.');
+    }
   }).catch(error => {
     console.error('Не удалось загрузить шрифт:', error);
   });
