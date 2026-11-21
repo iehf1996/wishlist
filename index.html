@@ -970,17 +970,19 @@
 
     activeProduct = product;
 
-    const status = statuses.get(product.id) || 'Статус не загружен';
-    const ownToken = getSavedToken(product.id);
-    const isBooked = status === 'Забронировано';
-    const canCancel = isBooked && !!ownToken;
+const status = statuses.get(product.id) || 'Статус не загружен';
+const ownToken = getSavedToken(product.id);
+const isBooked = status === 'Забронировано';
+const canCancel = isBooked && !!ownToken;
 
-    menuHeading.textContent = product.name;
-    menuStatus.textContent = isBooked ? 'Уже забронировано' : status;
+menuHeading.textContent = product.name;
+menuStatus.textContent = isBooked
+  ? (canCancel ? 'Вы забронировали этот подарок' : 'Уже забронировано')
+  : status;
 
-    openButton.hidden = false;
-    bookButton.hidden = isBooked;
-    cancelButton.hidden = !canCancel;
+openButton.hidden = false;
+bookButton.hidden = isBooked;
+cancelButton.hidden = !canCancel;
 
     bookButton.disabled = false;
     cancelButton.disabled = false;
