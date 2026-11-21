@@ -1128,9 +1128,6 @@
     preparedProducts.sort((a, b) => b.zIndex - a.zIndex);
     wishlist.dataset.ready = 'true';
 
-    await refreshStatuses();
-    wishlist.dataset.statusReady = 'true';
-
   } catch (error) {
     console.error('Ошибка подготовки вишлиста:', error);
     wishlist.dataset.ready = 'error';
@@ -1210,8 +1207,15 @@ wishlist.addEventListener('pointerdown', event => {
 
   wishlist.addEventListener('pointerup', clearLongPress);
   wishlist.addEventListener('pointercancel', clearLongPress);
-  wishlist.addEventListener('pointerleave', clearLongPress);
 
+   refreshStatuses()
+    .then(() => {
+      wishlist.dataset.statusReady = 'true';
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки статусов:', error);
+    });
+ 
 })();
 </script>
 
