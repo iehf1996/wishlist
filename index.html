@@ -918,7 +918,7 @@ html, body {
     statuses.clear();
 
     result.products.forEach(product => {
-      statuses.set(String(product.id), product.status || 'Свободно');
+      statuses.set(String(product.id), product.status || 'свободно для брони');
     });
   }
 
@@ -1076,7 +1076,7 @@ html, body {
       await refreshStatuses();
 
       setMenuStatus(
-        'Подарок забронирован. Вы сможете отменить бронь с этого устройства.',
+        'твоя бронь',
         'mine'
       );
 
@@ -1131,7 +1131,7 @@ html, body {
       await refreshStatuses();
 
       setMenuStatus(
-        'Бронь отменена. Подарок снова свободен.',
+        'свободно для брони',
         'free'
       );
 
