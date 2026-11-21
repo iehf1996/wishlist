@@ -986,6 +986,7 @@
         id: img.dataset.id,
         href: img.dataset.link,
         name: img.dataset.name,
+        noReserve: img.dataset.noReserve === 'true'
         zIndex: Number(getComputedStyle(img).zIndex)
       });
     }
