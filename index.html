@@ -1288,31 +1288,34 @@ body:not(.font-loaded) .gift-menu {
   });
 
   // Клик на телефоне открывает меню, на компьютере — ссылку
-  wishlist.addEventListener('click', event => {
-    if (longPressTriggered) {
-      longPressTriggered = false;
-      event.preventDefault();
+wishlist.addEventListener('click', event => {
+  if (longPressTriggered) {
+    longPressTriggered = false;
+    event.preventDefault();
+    return;
+  }
+
+  if (event.button !== 0) return;
+
+  const product = getProductAt(event.clientX, event.clientY);
+
+  if (!product) return;
+
+  if (mobileQuery.matches) {
+    event.preventDefault();
+
+    if (product.noReserve) {
+      window.open(product.href, '_blank', 'noopener,noreferrer');
       return;
     }
 
-    if (event.button !== 0) return;
+    showHighlight(product);
+    openMenu(product, event.clientX, event.clientY);
 
-    const product = getProductAt(event.clientX, event.clientY);
-
-    if (!product) return;
-
-    if (mobileQuery.matches) {
-      event.preventDefault();
-
-      showHighlight(product);
-
-      if (!product.noReserve) {
-        openMenu(product, event.clientX, event.clientY);
-      }
-    } else {
-      window.open(product.href, '_blank', 'noopener,noreferrer');
-    }
-  });
+  } else {
+    window.open(product.href, '_blank', 'noopener,noreferrer');
+  }
+});
 
   // Правая кнопка мыши открывает меню
   wishlist.addEventListener('contextmenu', event => {
