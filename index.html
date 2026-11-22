@@ -819,15 +819,34 @@ body:not(.font-loaded) .gift-menu {
   const bookButton = document.getElementById('giftBookButton');
   const cancelButton = document.getElementById('giftCancelButton');
 
-  // Приветственное окно
-  const welcomeOverlay = document.getElementById('welcomeOverlay');
-  const welcomeCloseButton = document.getElementById('welcomeCloseButton');
+ // Приветственное окно — показываем только при первом посещении
+const welcomeOverlay = document.getElementById('welcomeOverlay');
+const welcomeCloseButton = document.getElementById('welcomeCloseButton');
+const WELCOME_SEEN_KEY = 'wishlist-welcome-seen';
 
+let welcomeSeen = false;
+
+try {
+  welcomeSeen = localStorage.getItem(WELCOME_SEEN_KEY) === 'true';
+} catch (error) {
+  console.warn('Не удалось проверить приветствие:', error);
+}
+
+if (welcomeSeen) {
+  welcomeOverlay.hidden = true;
+} else {
   welcomeCloseButton.focus();
+}
 
-  welcomeCloseButton.addEventListener('click', () => {
-    welcomeOverlay.hidden = true;
-  });
+welcomeCloseButton.addEventListener('click', () => {
+  welcomeOverlay.hidden = true;
+
+  try {
+    localStorage.setItem(WELCOME_SEEN_KEY, 'true');
+  } catch (error) {
+    console.warn('Не удалось сохранить просмотр приветствия:', error);
+  }
+});
 
   const productElements = Array.from(wishlist.querySelectorAll('.product'));
   const SCALE = 0.5;
